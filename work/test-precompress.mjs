@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import zlib from 'node:zlib';
+import {spawnSync} from 'node:child_process';
+const betik=path.resolve(import.meta.dirname,'precompress.cjs');
+const kok=fs.mkdtempSync(path.join(os.tmpdir(),'precompress-'));
+const run=(...a)=>{const r=spawnSync(process.execPath,[betik,'--kok',kok,...a],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);return r.stdout;};
+try{
+const buyuk=JSON.stringify({a:'x'.repeat(3000)});
+fs.writeFileSync(path.join(kok,'big.json'),buyuk);
+fs.writeFileSync(path.join(kok,'small.json'),JSON.stringify({a:'x'.repeat(180)}));
+fs.writeFileSync(path.join(kok,'img.png'),Buffer.alloc(4000,7));
+const br=path.join(kok,'big.json.br');
+run('--kuru');
+assert.ok(!fs.existsSync(br),'kuru dosya yazmamalı');
+run();
+assert.ok(fs.existsSync(br));
+assert.ok(!fs.existsSync(path.join(kok,'small.json.br')));
+assert.ok(!fs.existsSync(path.join(kok,'img.png.br')));
+assert.equal(zlib.brotliDecompressSync(fs.readFileSync(br)).toString(),buyuk);
+assert.ok(!fs.existsSync(br+'.gz')&&!fs.existsSync(path.join(kok,'big.json.gz')));
+const m1=fs.statSync(br).mtimeMs;
+await new Promise(r=>setTimeout(r,30));
+const o2=run();
+assert.equal(fs.statSync(br).mtimeMs,m1,'ikinci koşuda yeniden yazılmamalı');
+assert.match(o2,/üretilen=0/);
+run('--gzip');
+const gz=path.join(kok,'big.json.gz');
+assert.equal(zlib.gunzipSync(fs.readFileSync(gz)).toString(),buyuk);
+assert.equal(fs.statSync(br).mtimeMs,m1);
+fs.unlinkSync(path.join(kok,'big.json'));
+run();
+assert.ok(!fs.existsSync(br)&&!fs.existsSync(gz),'yetim .br/.gz temizlenmeli');
+console.log('PASS: precompress br/gzip uretimi, esik ve uzanti atlama, mtime ile idempotans, yetim temizligi, kuru kosu.');
+}finally{fs.rmSync(kok,{recursive:true,force:true});}

@@ -6,7 +6,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo Tarayicida http://127.0.0.1:4173/haritalar adresini acin.
+echo Tarayicida http://127.0.0.1:4173/haritalar/ adresini acin.
 echo Durdurmak icin Ctrl+C kullanin.
 node outputs/zerozone-haritalar/server.cjs
 pause
