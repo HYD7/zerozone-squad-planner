@@ -27,4 +27,4 @@ export function copyRegions(source,current,mode='append',idFactory=()=>crypto.ra
   const regions=incoming.regions.map(r=>({...r,id:'copy-'+idFactory()}));
   return cleanRegions({...target,regions:mode==='replace'?regions:[...target.regions,...regions]});
 }
-export function readableLayer(id){const p=String(id??'').split('_');return p.length<2?String(id??''):p[0]+' · '+p.slice(1).join(' ');}
+export function readableLayer(id){const raw=String(id??''),m=/^(.+?)_((?:AAS|RAAS|Invasion|TC|Insurgency|Destruction|Skirmish|Seed|Training)|[A-Z]{2,8}-[A-Z]{2,8})(?:_(.+))?$/.exec(raw);if(m)return m[1].replace(/_/g,' ')+' · '+[m[2],m[3]&&m[3].replace(/_/g,' ')].filter(Boolean).join(' ');const p=raw.split('_');return p.length<2?raw:p[0]+' · '+p.slice(1).join(' ');}

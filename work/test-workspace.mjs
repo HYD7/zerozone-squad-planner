@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {cleanBundle,cleanDisplay,cleanSets,copyRegions,DATA_VERSION} from '../outputs/zerozone-haritalar/workspace-model.js';
+import {cleanBundle,cleanDisplay,cleanSets,copyRegions,readableLayer,DATA_VERSION} from '../outputs/zerozone-haritalar/workspace-model.js';
 import {createRegionLibrary} from '../outputs/zerozone-haritalar/region-library.js';
 import {RegionHistory} from '../outputs/zerozone-haritalar/region-model.js';
 const triangle=[{x:.1,y:.1},{x:.3,y:.1},{x:.2,y:.4}];
@@ -32,3 +32,8 @@ assert.throws(()=>cleanSets([snapshot,snapshot]));assert.throws(()=>cleanSets(Ar
 assert.deepEqual(cleanDisplay({markerSize:1000,labelSize:-5,colorBlind:'true'}),{markerSize:44,labelSize:11,colorBlind:false,colorMode:"none",colorIntensity:70});
 assert.equal(copyRegions(base,{regions:[]},'replace',()=> 'test').regions[0].id,'copy-test');
 console.log('PASS: combined-backup roundtrip and validation, set snapshots, preview/apply/undo, append/replace and source isolation, stale/cross-map rejection, display bounds.');
+
+assert.equal(readableLayer('Jensens_Range_USA-PLA'),'Jensens Range · USA-PLA');
+assert.equal(readableLayer('Sanxian_AAS_v1'),'Sanxian · AAS v1');
+assert.equal(readableLayer('Harju_RAAS_v3_CL'),'Harju · RAAS v3 CL');
+assert.equal(readableLayer('Gorodok_AAS_v1'),'Gorodok · AAS v1');

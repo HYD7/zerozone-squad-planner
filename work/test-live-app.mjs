@@ -13,17 +13,19 @@ async function boot({search='',storageInit={},live}){
   const storage=new Map(Object.entries(storageInit).map(([k,v])=>['zerozone-maps-v1:'+k,v])),nodes=new Map(),errors=[],handlers={};
   const node=()=>({value:'',dataset:{},style:{setProperty(){}},classList:{add(){},remove(){},toggle(){}},setAttribute(){},addEventListener(){},append(){},insertAdjacentHTML(pos,html){this.innerHTML=(this.innerHTML||'')+html;},focus(){},close(){},showModal(){}});
   const document={querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s);},querySelectorAll(){return [];},createElement:node,body:node(),addEventListener(type,fn){(handlers[type]||=[]).push(fn);}};
-  const env={live};
+  const env={live,gate:null},urls=[];
+  class FakeImg{constructor(){this.cls=new Set();this.classList={contains:c=>this.cls.has(c),add:c=>this.cls.add(c)};}}
   const fetchImpl=async url=>{
     if(url==='/api/haritalar/canli'){
       if(env.live==null)return {ok:false,status:404,headers:{get:()=>null},json:async()=>({})};
       const body=typeof env.live==='function'?env.live():env.live;
       return {ok:true,status:200,headers:{get:()=>null},json:async()=>JSON.parse(JSON.stringify(body))};
     }
+    if(env.gate&&url===env.gate.url)await env.gate.promise;
     return {ok:true,status:200,headers:{get:()=>null},json:async()=>JSON.parse(await fs.readFile(path.join(root,url),'utf8'))};
   };
   const location={href:'http://127.0.0.1:4173/haritalar/'+search,search};
-  const context=vm.createContext({document,console:{...console,error:e=>errors.push(e),debug(){}},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},location,history:{replaceState(){}},URL,URLSearchParams,crypto:webcrypto,Blob,setTimeout:()=>0,clearTimeout(){},fetch:fetchImpl});
+  const context=vm.createContext({document,console:{...console,error:e=>errors.push(e),debug(){}},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},location,history:{replaceState(_a,_b,u){urls.push(String(u));}},HTMLImageElement:FakeImg,URL,URLSearchParams,crypto:webcrypto,Blob,setTimeout:()=>0,clearTimeout(){},fetch:fetchImpl});
   const modules=new Map();
   async function load(file){
     if(modules.has(file))return modules.get(file);
@@ -31,14 +33,14 @@ async function boot({search='',storageInit={},live}){
     if(file.endsWith('map-engine.js'))source=`export class TacticalMap{constructor(element,callbacks){this.element=element;this.callbacks=callbacks;this.annotations=[];this.overlays={};this.tool='pan';this.map={doubleClickZoom:{enable(){},disable(){}}};this.L={layerGroup:()=>({addTo(){return this},clearLayers(){}})};}setVisuals(){}setTool(v){this.tool=v;}setMap(c){this.config=c;this.annotations=[];}updateObjectives(c){Object.assign(this.config,c);}exportPlan(){return this.annotations;}importPlan(a){if(!Array.isArray(a))throw Error('invalid annotations');this.annotations=a;this.callbacks.onChange(a);} _renderObjectives(){} _renderRedZones(){} _renderAnnotations(){} getGrid(){return 'A1';}}`;
     else if(file.endsWith('planning-tools.js'))source=`export function createPlanningTools(){return {render(){},compare(){},timerPins(){return [];},restoreTimerPins(){}}}`;
     else source=await fs.readFile(file,'utf8');
-    if(file.endsWith('app.js'))source+='\nexport {actions,liveSync,map};\nexport const dbg=()=>({units:chosenUnits.slice(),layer:currentLayer.id,map:currentMap.id,follow:liveFollow});';
+    if(file.endsWith('app.js'))source+='\nexport {actions,liveSync,map};\nexport const dbg=()=>({units:chosenUnits.slice(),layer:currentLayer.id,map:currentMap.id,follow:liveFollow,solved:liveSolved});';
     const m=new vm.SourceTextModule(source,{context,identifier:file});modules.set(file,m);
     return m;
   }
   const app=await load(path.join(root,'app.js'));await app.link((spec,ref)=>load(path.resolve(path.dirname(ref.identifier),spec)));await app.evaluate();
   await settle();
   const click=async dataset=>{const b={dataset,hasAttribute:()=>false};for(const fn of handlers.click||[])await fn({target:{closest:()=>b}});await settle();};
-  return {api:app.namespace,nodes,storage,errors,click,badge:()=>nodes.get('#live-badge'),poll:async()=>{await app.namespace.liveSync.pollNow();await settle();}};
+  return {env,urls,handlers,FakeImg,api:app.namespace,nodes,storage,errors,click,badge:()=>nodes.get('#live-badge'),poll:async()=>{await app.namespace.liveSync.pollNow();await settle();}};
 }
 
 // (1) canli yanitla acilis
@@ -101,6 +103,7 @@ async function boot({search='',storageInit={},live}){
   const t=await boot({search:'?map=Gorodok&layer=Gorodok_RAAS_v1',live:INVASION});
   assert.equal(t.api.dbg().layer,'Gorodok_RAAS_v1');assert.equal(t.api.dbg().follow,false);
   assert.equal(t.badge().hidden,false);
+  assert.equal(t.storage.has('zerozone-maps-v1:live-follow'),false,'?map= acilisi live-follow yazmaz');
   assert.match(t.badge().innerHTML,/Canlı: Gorodok Invasion v3/);assert.match(t.badge().innerHTML,/data-action="live-return"[^>]*>Canlıya dön/);
   console.log('PASS 2: ?map= start keeps follow off, badge and return button visible.');
 }
@@ -118,5 +121,58 @@ async function boot({search='',storageInit={},live}){
   const t=await boot({live:null});
   assert.equal(t.badge().hidden,true);assert.deepEqual(t.errors,[]);assert.equal(t.api.dbg().layer,'Gorodok_AAS_v1');
   console.log('PASS 6: 404 hides badge without errors, legacy open behavior.');
+}
+// (a) canli uc 404 olunca URL'ye map/layer geri yazilir, liveSolved null
+{
+  const t=await boot({live:INVASION});
+  assert.equal(t.api.dbg().follow,true);assert.ok(t.api.dbg().solved);
+  const u=new URL(t.urls.at(-1));assert.equal(u.searchParams.has('map'),false,'takipte URL haritasiz');
+  t.env.live=null;await t.poll();
+  const v=new URL(t.urls.at(-1));
+  assert.equal(v.searchParams.get('map'),'Gorodok');assert.equal(v.searchParams.get('layer'),'Gorodok_Invasion_v3');
+  assert.equal(t.api.dbg().solved,null);assert.equal(t.badge().hidden,true);
+  console.log('PASS a: 404 after follow restores ?map=&layer= and clears liveSolved.');
+}
+// (a2) online:false
+{
+  let body=INVASION();const t=await boot({live:()=>body});
+  body={...INVASION(),online:false};await t.poll();
+  const v=new URL(t.urls.at(-1));assert.equal(v.searchParams.get('layer'),'Gorodok_Invasion_v3');assert.equal(t.api.dbg().solved,null);
+  console.log('PASS a2: online:false restores URL and clears liveSolved.');
+}
+// (b) ?map= ile ve 'Canliya don' sonrasi yazim
+{
+  const t=await boot({search:'?map=Gorodok&layer=Gorodok_RAAS_v1',live:INVASION});
+  assert.equal(t.storage.has('zerozone-maps-v1:live-follow'),false);
+  await t.api.actions['live-return']();await settle();
+  assert.equal(t.storage.get('zerozone-maps-v1:live-follow'),'1');
+  console.log('PASS b: pinned open does not write live-follow; return writes 1.');
+}
+// (c) goLive sirasinda kullanici baska katman secerse birlikler yanlis katmana yazilmaz
+{
+  const catalog=JSON.parse(await fs.readFile(path.join(root,'data/catalog.json'),'utf8'));
+  const other=catalog.find(m=>m.id!=='Gorodok'),od=JSON.parse(await fs.readFile(path.join(root,`data/${other.id}.json`),'utf8')),ol=od[0];
+  const gor=JSON.parse(await fs.readFile(path.join(root,'data/Gorodok.json'),'utf8')),raas=gor.find(l=>l.id==='Gorodok_RAAS_v1');
+  let body=INVASION();const t=await boot({live:()=>body});
+  let release;t.env.gate={url:`data/${other.id}.json`,promise:new Promise(r=>{release=r;})};
+  body=liveBody(ol.id,other.id,ol.mode,ol.teams[0].unit,ol.teams[1].unit);await t.poll();
+  await t.click({layer:'Gorodok_RAAS_v1'});
+  release();await settle();
+  const s=t.api.dbg();
+  assert.equal(s.layer,'Gorodok_RAAS_v1');assert.equal(s.map,'Gorodok');assert.equal(s.follow,false);
+  assert.deepEqual(s.units,raas.teams.map(x=>x.unit),'birlikler kullanicinin sectigi katmanin');
+  assert.deepEqual(t.errors,[]);
+  console.log('PASS c: goLive race does not write units to the wrong layer.');
+}
+// (d) bayrak hata olayi
+{
+  const t=await boot({live:INVASION});
+  const {flagImg}=await import('../outputs/zerozone-haritalar/faction-flags.js');
+  assert.ok(!flagImg('AFU').includes('onerror'));
+  const img=new t.FakeImg();img.cls.add('zz-flag');
+  for(const fn of t.handlers.error||[])fn({target:img});
+  assert.ok(img.cls.has('is-missing'));
+  const other=new t.FakeImg();for(const fn of t.handlers.error||[])fn({target:other});assert.equal(other.cls.has('is-missing'),false);
+  console.log('PASS d: error event marks .zz-flag is-missing, no inline onerror.');
 }
 console.log('PASS: live follow, badge, toast and flag rendering in the actual app (DOM/map substitutes).');

@@ -60,7 +60,7 @@ export function createPlanningTools({map,getState,escape:esc,icon,setTool,saveDr
     }
     if(b.hasAttribute('data-edit-delete')){map.importPlan(map.exportPlan().filter(a=>a.id!==selected));selected=null;renderEditor();}
     if(b.hasAttribute('data-edit-style')){const items=map.exportPlan(),a=items.find(a=>a.id===selected);if(a){a.style={...map.style};map.importPlan(items);toast('Seçili işaretin görünümü güncellendi.');}}
-    if(b.dataset.timerPin){const id=b.dataset.timerPin,index=pins.findIndex(p=>p.id===id);if(index>=0)pins.splice(index,1);else{const layer=getState().layer.id,a=timerAssets().find(p=>p.id===id);if(!a)return;if(pins.filter(p=>p.layer===layer).length>=3){toast('Bu layerda en fazla üç sayaç sabitleyebilirsin.');return;}pins.push({...a,layer,team:getState().teamIndex,unitId:getState().activeUnit(getState().teamIndex-1).id,name:'T'+getState().teamIndex+' · '+a.name});if(pins.length>100)pins.shift();}savePins();render();tick();}
+    if(b.dataset.timerPin){const id=b.dataset.timerPin,index=pins.findIndex(p=>p.id===id);if(index>=0)pins.splice(index,1);else{const layer=getState().layer.id,a=timerAssets().find(p=>p.id===id);if(!a)return;if(pins.filter(p=>p.layer===layer).length>=3){toast('Bu katmanda en fazla üç sayaç sabitleyebilirsin.');return;}pins.push({...a,layer,team:getState().teamIndex,unitId:getState().activeUnit(getState().teamIndex-1).id,name:'T'+getState().teamIndex+' · '+a.name});if(pins.length>100)pins.shift();}savePins();render();tick();}
     if(b.dataset.timer){timers.set(b.dataset.timer,Date.now()+Number(b.dataset.seconds)*1000);saveTimers();tick();}
     if(b.dataset.timerStop){timers.delete(b.dataset.timerStop);saveTimers();tick();}
   });

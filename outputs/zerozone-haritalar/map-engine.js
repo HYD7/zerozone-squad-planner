@@ -37,7 +37,8 @@ function injectStyles() {
     .zz-tactical-map .zz-objective.capture-future{opacity:.5}
     .zz-tactical-map .zz-capture-chance{color:var(--zs-accent,#b5e8fa);background:var(--zs-surface-2,#101619ed);border:1px solid color-mix(in srgb,var(--zs-accent,#b5e8fa) 31%,transparent);border-radius:var(--zz-radius-xs,6px);padding:2px 5px;font-size:var(--zs-fs-xs,12px);font-weight:700;line-height:1.3}
     .zz-tactical-map .zz-objective-name{font-size:var(--zs-fs-xs,12px);line-height:1.35;font-weight:700;color:var(--zs-text,#fff);text-shadow:0 1px 4px var(--zz-text-shadow,#000),0 0 7px var(--zz-text-shadow,#000);padding:3px 7px;border-radius:var(--zz-radius-xs,6px);background:var(--zs-surface-2,#121619c7);max-width:210px;text-align:center;white-space:nowrap}
-    .zz-tactical-map .zz-label-box{display:block;width:max-content;pointer-events:none}
+    .zz-tactical-map .zz-labels-pane{pointer-events:none}
+    .zz-tactical-map .zz-label-box{display:block;width:max-content;pointer-events:auto;cursor:pointer}
     .zz-tactical-map .zz-label-box .zz-objective-name{display:block;width:max-content}
     .zz-tactical-map .zz-grid-label{color:var(--zs-text,#e9f2f0);font-size:var(--zs-fs-xs,12px);font-weight:700;line-height:var(--zs-lh-xs,16px);text-shadow:0 1px 4px var(--zz-text-shadow,#000),0 0 5px var(--zz-text-shadow,#000);white-space:nowrap;pointer-events:none}
     .zz-tactical-map .zz-map-tooltip{border:1px solid var(--zs-line-2,#ffffff25);border-radius:var(--zz-radius-xs,6px);background:var(--zs-surface-2,#111619ed);color:var(--zs-text,#e7f7fc);font:600 var(--zs-fs-xs,12px)/1.5 Montserrat,Arial,sans-serif;padding:5px 8px;box-shadow:0 3px 12px var(--zz-shadow,#0007);white-space:nowrap}
@@ -103,6 +104,7 @@ export class TacticalMap {
     this.map.createPane('zz-labels');
     this.map.getPane('zz-labels').style.zIndex = '650';
     this.map.getPane('zz-labels').style.pointerEvents = 'none';
+    this.L.DomUtil.addClass(this.map.getPane('zz-labels'), 'zz-labels-pane');
     this.map.createPane('zz-ranges');
     this.map.getPane('zz-ranges').style.zIndex = '420';
     this.map.getPane('zz-ranges').style.pointerEvents = 'none';
@@ -453,7 +455,10 @@ export class TacticalMap {
       const to = all.find(point => point.id === link.to);
       if (this._validPoint(from) && this._validPoint(to)) L.polyline([this._latLng(from), this._latLng(to)], { color: link.captured?palette.selected:'#d4e4ea', weight: link.captured?3:2, dashArray: link.captured?null:'5 8', opacity: 0.75, interactive: false }).addTo(this.objectivesLayer);
     }
-    const discRadius=point=>this.config.mains.includes(point)?20:(this.config.points.length>12&&!['selected','next'].includes(point.captureStatus)?11:16);
+    const cssPx=(name,fallback)=>{const v=parseFloat(getComputedStyle(this.element).getPropertyValue(name));return Number.isFinite(v)&&v>0?v:fallback;};
+    const markerSize=cssPx('--marker-size',29),labelSize=cssPx('--label-size',12);
+    // Disk yarıçapı gerçek --marker-size'dan türer (ana üs 1.1x, yoğun 0.73x; CSS ile aynı oranlar) + 2px çerçeve.
+    const discRadius=point=>markerSize*(this.config.mains.includes(point)?1.1:(this.config.points.length>12&&!['selected','next'].includes(point.captureStatus)?.73:1))/2+2;
     const screen=all.filter(point=>this._validPoint(point)&&!point.isHex).map(point=>{const c=this.map.latLngToContainerPoint(this._latLng(point));return {point,x:c.x,y:c.y,r:discRadius(point)};});
     const hits=(self,box)=>screen.some(o=>o.point!==self&&o.x+o.r>box.l&&o.x-o.r<box.r&&o.y+o.r>box.t&&o.y-o.r<box.b);
     const render = (point, index, isMain) => {
@@ -470,7 +475,7 @@ export class TacticalMap {
       const title = escapeHTML(point.name || (isMain ? 'Ana üs' : `Hedef ${index + 1}`));
       const state=point.captureStatus,active=['selected','next'].includes(state);
       const dense=this.config.points.length>12&&!isMain&&!active;
-      const showName=this.overlays.labels&&(active||!dense||this.map.getZoom()>this.map.getBoundsZoom(this.bounds,false,[20,20])+.8);
+      const showName=this.overlays.labels&&(active||!dense||this.map.getZoom()>this.map.getBoundsZoom(this.bounds,false,[20,20])+.8+Math.log2(Math.max(1,(markerSize/29+labelSize/12)/2)));
       const inside = isMain ? (this.colorBlind?`<span>${red?'T2':'T1'}</span>`:'<span>⌂</span>') : state==='selected'?'⚑':escapeHTML(point.order ?? index + 1);
       const chance=state==='next'?`<span class="zz-capture-chance">%${Math.round(point.probability*100)}</span>`:'';
       const icon = this._icon(`<div class="zz-objective${state?' capture-'+state:''}${dense?' is-dense':''}"><span class="zz-objective-disc${isMain ? ' is-main' : ''}${red ? ' team-red' : ''}${dense?' dense':''}${state?' capture-'+state:''}">${inside}</span>${chance}${this.colorBlind&&active?`<span class="zz-cb-state">${state==='selected'?'✓ Seçili':'→ Sıradaki'}</span>`:''}</div>`);
@@ -488,13 +493,13 @@ export class TacticalMap {
       marker.on('click',activate);
       if (showName) {
         // Etiket ayrı zz-labels panesinde; komşu disk altındaki kutuya biniyorsa etiket diskin üstüne alınır (zoomend'de yeniden hesaplanır).
-        const me=screen.find(o=>o.point===point),r=me.r,extra=(state==='next'?26:0)+(this.colorBlind&&active?22:0),w=Math.min(210,String(point.name||'Hedef').length*7.5+16),h=24;
+        const me=screen.find(o=>o.point===point),r=me.r,extra=(state==='next'?26:0)+(this.colorBlind&&active?22:0),w=Math.min(210,Math.ceil(String(point.name||'Hedef').length*.62*labelSize)+16),h=Math.ceil(labelSize*1.35)+8;
         const tl=this.map.latLngToContainerPoint(this._latLng({x:0,y:0})),edge=box=>box.t<tl.y+24||box.l<tl.x+26;
         const below={l:me.x-w/2,r:me.x+w/2,t:me.y+r+4+extra,b:me.y+r+4+extra+h},up={l:below.l,r:below.r,t:me.y-r-4-h,b:me.y-r-4},side={l:me.x+r+6,r:me.x+r+6+w,t:me.y-h/2,b:me.y+h/2};
         const free=box=>!hits(point,box)&&!edge(box);
         const place=free(below)?'below':free(up)?'above':free(side)?'side':!hits(point,below)?'below':!hits(point,up)?'above':'below';
         const transform=place==='above'?`translate(-50%,calc(-100% - ${r+4}px))`:place==='side'?`translate(${r+6}px,-50%)`:`translate(-50%,${r+4+extra}px)`;
-        L.marker(this._latLng(point),{icon:this._icon(`<span class="zz-label-box" style="transform:${transform}"><span class="zz-objective-name">${title}</span></span>`,'zz-label-icon'),pane:'zz-labels',interactive:false,keyboard:false}).addTo(this.objectivesLayer);
+        L.marker(this._latLng(point),{icon:this._icon(`<span class="zz-label-box" style="transform:${transform}"><span class="zz-objective-name">${title}</span></span>`,'zz-label-icon'),pane:'zz-labels',interactive:true,keyboard:false,bubblingMouseEvents:false}).addTo(this.objectivesLayer).on('click',activate);
       }
       if (!showName) marker.bindTooltip(escapeHTML(name), { className: 'zz-map-tooltip', direction: 'top', offset: [0, -20] });
     };

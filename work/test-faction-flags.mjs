@@ -9,7 +9,8 @@ for (const a of Object.keys(FACTION_ALIASES)) assert.ok(!codes.includes(a), a);
 for (const c of codes) {
   assert.equal(flagUrl(c), `assets/squad/flags/${c}.webp`);
   const img = flagImg(c, { label: units.factions[c].name });
-  assert.match(img, new RegExp(String.raw`^<img class="zz-flag" src="assets/squad/flags/${c}\.webp" width="20" height="20" alt="[^"]+" loading="lazy" decoding="async" onerror="this\.classList\.add\('is-missing'\)">$`));
+  assert.match(img, new RegExp(String.raw`^<img class="zz-flag" src="assets/squad/flags/${c}\.webp" width="20" height="20" alt="[^"]+" loading="lazy" decoding="async">$`));
+  assert.ok(!img.includes("onerror"));
   assert.equal(factionLabel(c, units), units.factions[c].name);
 }
 assert.equal(flagUrl(' afu '), 'assets/squad/flags/AFU.webp');

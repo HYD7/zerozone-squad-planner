@@ -26,7 +26,7 @@ export function flagImg(code, { size = 20, label, className = 'zz-flag' } = {}) 
   const c = normalizeFactionCode(code);
   const n = Number.isFinite(Number(size)) && Number(size) > 0 ? Math.round(Number(size)) : 20;
   const alt = label == null || label === '' ? c : label;
-  return `<img class="${esc(className)}" src="${esc(url)}" width="${n}" height="${n}" alt="${esc(alt)}" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">`;
+  return `<img class="${esc(className)}" src="${esc(url)}" width="${n}" height="${n}" alt="${esc(alt)}" loading="lazy" decoding="async">`;
 }
 
 export function factionLabel(code, units) {
