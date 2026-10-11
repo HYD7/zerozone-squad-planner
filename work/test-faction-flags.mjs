@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { FLAG_DIR, FACTION_CODES, FACTION_ALIASES, normalizeFactionCode, flagUrl, flagImg, factionLabel } from '../outputs/zerozone-haritalar/faction-flags.js';
+const units = JSON.parse(await fs.readFile(new URL('../outputs/zerozone-haritalar/data/units.json', import.meta.url), 'utf8'));
+const codes = Object.keys(units.factions);
+assert.deepEqual([...FACTION_CODES].sort(), [...codes].sort());
+assert.equal(FLAG_DIR, 'assets/squad/flags/');
+for (const a of Object.keys(FACTION_ALIASES)) assert.ok(!codes.includes(a), a);
+for (const c of codes) {
+  assert.equal(flagUrl(c), `assets/squad/flags/${c}.webp`);
+  const img = flagImg(c, { label: units.factions[c].name });
+  assert.match(img, new RegExp(String.raw`^<img class="zz-flag" src="assets/squad/flags/${c}\.webp" width="20" height="20" alt="[^"]+" loading="lazy" decoding="async" onerror="this\.classList\.add\('is-missing'\)">$`));
+  assert.equal(factionLabel(c, units), units.factions[c].name);
+}
+assert.equal(flagUrl(' afu '), 'assets/squad/flags/AFU.webp');
+assert.equal(normalizeFactionCode('usmc'), 'USMC');
+assert.equal(normalizeFactionCode('A'), null);
+assert.equal(normalizeFactionCode(null), null);
+assert.equal(normalizeFactionCode('ABCDEFGHI'), null);
+assert.equal(flagUrl('XYZ'), null);
+const missing = '<span class="zz-flag zz-flag-missing" aria-hidden="true"></span>';
+assert.equal(flagImg('XYZ'), missing);
+assert.equal(flagImg(undefined), missing);
+const evil = '"><img src=x onerror=alert(1)>';
+assert.equal(flagImg(evil), missing);
+assert.ok(!flagImg(evil).includes('<img'));
+const esc = flagImg('AFU', { label: evil, className: evil, size: '"><x' });
+assert.ok(!esc.includes('"><img') && (esc.match(/<img/g) || []).length === 1);
+assert.match(esc, /width="20"/);
+assert.equal(normalizeFactionCode('mea'), 'MEI');
+assert.equal(flagUrl('RUS'), 'assets/squad/flags/RGF.webp');
+assert.equal(flagUrl('ins'), 'assets/squad/flags/IMF.webp');
+assert.match(flagImg('AFU'), /alt="AFU"/);
+assert.match(flagImg('AFU', { size: 32 }), /width="32" height="32"/);
+assert.equal(factionLabel('xyz', units), 'XYZ');
+assert.equal(factionLabel('"><', units), '');
+console.log(`PASS: faction flags (${codes.length} codes, ${Object.keys(FACTION_ALIASES).length} aliases)`);
