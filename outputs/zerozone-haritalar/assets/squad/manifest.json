@@ -1777,6 +1777,222 @@
       "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/vehicles/vanilla/ZTZ99A.webp",
       "sha256": "848ea72ad039751cb700b089b3a37185d53d5bc47a996d008eb847c459255d38",
       "bytes": 32160
+    },
+    {
+      "file": "assets/squad/flags/ADF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/ADF.webp",
+      "sha256": "1600225d3e51855a77f6efa564d12be964f78db2d8803d60eb996477f16d645f",
+      "bytes": 9326
+    },
+    {
+      "file": "assets/squad/flags/circle/ADF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/ADF.webp",
+      "sha256": "88f30a9f586c71a8ee7ad1e99e2bc094ad0046dca03b3ca17fd5a348399a0b9e",
+      "bytes": 5958
+    },
+    {
+      "file": "assets/squad/flags/AFU.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/AFU.webp",
+      "sha256": "d5372fe8d13394fb65e583690024e4f1ebd69133dd39d6883e310c093176270e",
+      "bytes": 688
+    },
+    {
+      "file": "assets/squad/flags/circle/AFU.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/AFU.webp",
+      "sha256": "662ccf7c71502ceacc8c842a31d9c93f460a2d7308ff9c8f30eedfacebe5922c",
+      "bytes": 534
+    },
+    {
+      "file": "assets/squad/flags/BAF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/BAF.webp",
+      "sha256": "9ebf37b5184024d8561fed3206767f6242070d53c800410b28d7fc65089c52b7",
+      "bytes": 11946
+    },
+    {
+      "file": "assets/squad/flags/circle/BAF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/BAF.webp",
+      "sha256": "d40b059efefe4d3b8154c3661cb4fc9c77bebe5de169fa814e135962526e9189",
+      "bytes": 3826
+    },
+    {
+      "file": "assets/squad/flags/CAF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/CAF.webp",
+      "sha256": "c49a91526908c288833099cb380fe6c4fe46aa9e1811d85e787fc22879bcb1c8",
+      "bytes": 4526
+    },
+    {
+      "file": "assets/squad/flags/circle/CAF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/CAF.webp",
+      "sha256": "197daf176a9800982915d6b7492ca0b6e5d6b29ade2fb5b16e2f0f0fcfedbd6b",
+      "bytes": 2914
+    },
+    {
+      "file": "assets/squad/flags/CIV.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/unknown.webp",
+      "sha256": "ada9dd516c01df498174c897dfd9df70d712864acd247df656fc4948dccd1adf",
+      "bytes": 1038
+    },
+    {
+      "file": "assets/squad/flags/circle/CIV.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/main_circle.webp",
+      "sha256": "d391734a516e1609e720c20ba38d21792490734133766f866de630c8df00bcc9",
+      "bytes": 2252
+    },
+    {
+      "file": "assets/squad/flags/CRF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/CRF.webp",
+      "sha256": "9691f73877a9698ba505abf48aba04ef3a86e7c740cf25513116ff888dd48782",
+      "bytes": 4810
+    },
+    {
+      "file": "assets/squad/flags/circle/CRF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/CRF.webp",
+      "sha256": "fe8d8539b9a2e4142ac7de76cb9a6b8b8fc0df931ff5b30cc6be3d3f27a0c21d",
+      "bytes": 4394
+    },
+    {
+      "file": "assets/squad/flags/GFI.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/GFI.webp",
+      "sha256": "03dab45d9e6112c32d6a0a423eae5412f6cec5bec99f80c8e4d2f034bb768338",
+      "bytes": 10164
+    },
+    {
+      "file": "assets/squad/flags/circle/GFI.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/GFI.webp",
+      "sha256": "391d3e84aee02ea21a4250cb6ee515375a54977ff4ea1646388a83c581ce0761",
+      "bytes": 6596
+    },
+    {
+      "file": "assets/squad/flags/IMF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/IMF.webp",
+      "sha256": "d931825f69ccefea392d4666ed96dbd511141cc90b2508c0cc577e9e1e31abf9",
+      "bytes": 10734
+    },
+    {
+      "file": "assets/squad/flags/circle/IMF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/IMF.webp",
+      "sha256": "b6d5d4770ddebf7f8c48d517dda6b0657c6901f3cccf0e2c802728d61381b480",
+      "bytes": 7436
+    },
+    {
+      "file": "assets/squad/flags/MEI.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/MEI.webp",
+      "sha256": "981f894a966aee2c5e14acdc9f2360e4589e91dd78e3af8ee88c47b09763935b",
+      "bytes": 7130
+    },
+    {
+      "file": "assets/squad/flags/circle/MEI.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/MEI.webp",
+      "sha256": "d85b364ae08bbc5abb77140082d683da44776625dd07da6d18eb242d41b5c469",
+      "bytes": 3828
+    },
+    {
+      "file": "assets/squad/flags/PLA.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/PLA.webp",
+      "sha256": "4fe6a41a14dab50590dfc9600cf2809e3158f2cb9ce73a1befdfe4406931dbbb",
+      "bytes": 2814
+    },
+    {
+      "file": "assets/squad/flags/circle/PLA.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/PLA.webp",
+      "sha256": "839102c84f3af3caadacef1d79fcb69160a47f93c44205ece228e87eb384bc42",
+      "bytes": 2270
+    },
+    {
+      "file": "assets/squad/flags/PLAAGF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/PLAAGF.webp",
+      "sha256": "7fdbac58b1129829d9f6d4c9f4d395e1e29640dd8497294612c4e3f6cb8104c9",
+      "bytes": 2620
+    },
+    {
+      "file": "assets/squad/flags/circle/PLAAGF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/PLAAGF.webp",
+      "sha256": "9a3781a9301ea88caad0d0e2edb92541493c739f12be7f44918fa30562888417",
+      "bytes": 2296
+    },
+    {
+      "file": "assets/squad/flags/PLANMC.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/PLANMC.webp",
+      "sha256": "1a56faa37dfd69594b4e093c063760e7ff237f0b81654de45468b38eb9c8ac19",
+      "bytes": 2792
+    },
+    {
+      "file": "assets/squad/flags/circle/PLANMC.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/PLANMC.webp",
+      "sha256": "b7cda4802209e2ee24cabaf0c5c7f49a3e6dc727ddb8e4ff28ebca8b095fefd9",
+      "bytes": 2352
+    },
+    {
+      "file": "assets/squad/flags/RGF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/RGF.webp",
+      "sha256": "0acff8fc305b73b6710ca8434e1845e4ee5829825b39665a2cf97828c05ed336",
+      "bytes": 4144
+    },
+    {
+      "file": "assets/squad/flags/circle/RGF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/RGF.webp",
+      "sha256": "0654244cb5479764bcad79871bbb134fcbc06c1742bcce999a1ffe4f928ddebf",
+      "bytes": 1656
+    },
+    {
+      "file": "assets/squad/flags/TLF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/TLF.webp",
+      "sha256": "28d7c417fe3d13c0916f2c05ccc380f7529f87a327b310dfefe82a167becbf5e",
+      "bytes": 6336
+    },
+    {
+      "file": "assets/squad/flags/circle/TLF.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/TLF.webp",
+      "sha256": "84268a47a38a9f6e68e7f5b1727e61a43131b46f2e3048c8237a75f0c9875164",
+      "bytes": 5108
+    },
+    {
+      "file": "assets/squad/flags/USA.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/USA.webp",
+      "sha256": "ca2947adcfe9434a23a3cb6aa171fd1071baf5818423cf51b03bef4fe84aad74",
+      "bytes": 11016
+    },
+    {
+      "file": "assets/squad/flags/circle/USA.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/USA.webp",
+      "sha256": "55177a2554c97cde577cc477362bfd4f394c809894169b1ad3d2300a04289a29",
+      "bytes": 8854
+    },
+    {
+      "file": "assets/squad/flags/USMC.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/USMC.webp",
+      "sha256": "919e7df7c50044385d27ae8043d8506494218f2cf6a4035621c03f6d115a4db7",
+      "bytes": 17350
+    },
+    {
+      "file": "assets/squad/flags/circle/USMC.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/USMC.webp",
+      "sha256": "601323afa86f3e78f080a888618c34926bbbb7aa1d6e719be74f091776a566ee",
+      "bytes": 16060
+    },
+    {
+      "file": "assets/squad/flags/VDV.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/VDV.webp",
+      "sha256": "18a32d251f1ea38d857c8c63e1c42b495dcb083428d0b849de32636748f78eab",
+      "bytes": 8754
+    },
+    {
+      "file": "assets/squad/flags/circle/VDV.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/VDV.webp",
+      "sha256": "956c1c4649a26be28e563683964d1c3887418319f0c7ad0700b5aed690e7c011",
+      "bytes": 5124
+    },
+    {
+      "file": "assets/squad/flags/WPMC.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/WPMC.webp",
+      "sha256": "ed4b69fd042e3495febe4210cf9afab97315ebad3946e2d90e30a127fd4690f1",
+      "bytes": 14284
+    },
+    {
+      "file": "assets/squad/flags/circle/WPMC.webp",
+      "source": "https://raw.githubusercontent.com/sh4rkman/SquadCalc/24828d6d3081c7ce52b10ef39ec86036ebf010b5/public/img/flags/vanilla/circles/WPMC.webp",
+      "sha256": "d2fb8fc4b79bb205e111425948db2e66822d5e06eaed8217d8b21a51c9e03e1f",
+      "bytes": 7250
     }
   ],
   "missingPhotos": [],

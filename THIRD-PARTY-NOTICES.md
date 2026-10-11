@@ -19,3 +19,5 @@ Kaynakların lisans metinleri korunmuştur. Bu depo, üçüncü taraf oyun varl�
 
 - Dokulu araç dış modelleri ve 767 albedo kaplaması: Squad Armor vehicles/textures kaynakları; hash ve eksik kaplama listesi `data/armor/exterior-manifest.json`. Haklar Squad / Offworld Industries ve ilgili hak sahiplerindedir.
 - GLTFLoader, DRACOLoader ve BufferGeometryUtils: Three.js r180 MIT. Draco 1.5.7 decoder: Google, Apache-2.0; lisans `assets/vendor/draco/LICENSE.txt`.
+
+- Fraksiyon bayrakları (18 dikdörtgen + 18 yuvarlak WebP): SquadCalc `public/img/flags/vanilla` ve `vanilla/circles` (CIV için genel `unknown.webp` ve `main_circle.webp` yedeği), sabit commit `24828d6d3081c7ce52b10ef39ec86036ebf010b5`; SquadCalc MIT Non-Commercial koşullarındadır. Görseller Squad / Offworld Industries ve ilgili hak sahiplerinin varlığıdır; atıf zorunludur. Tam kaynak ve SHA-256 değerleri `outputs/zerozone-haritalar/assets/squad/manifest.json` içindedir. Bu atıf ek lisans veya ticari kullanım izni vermez.
