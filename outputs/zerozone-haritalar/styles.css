@@ -1,14 +1,75 @@
 :root {
-  --bg:#111112;
-  --surface:#151718;
-  --raised:#1a1d1f;
-  --line:#ffffff12;
-  --line2:#ffffff22;
-  --accent:#b5e8fa;
-  --text:#f4f3ef;
-  --muted:#aaa9a7;
-  --dim:#777d81;
-  --radius:10px;
+  --zs-bg:#111112;
+  --zs-surface:rgba(13,14,15,.66);
+  --zs-surface-2:rgba(13,14,15,.86);
+  --zs-overlay:rgba(17,17,18,.98);
+  --zs-accent:#b5e8fa;
+  --zs-accent-soft:rgba(181,232,250,.06);
+  --zs-accent-glow:rgba(181,232,250,.1);
+  --zs-on-accent:#111;
+  --zs-text:#f4f3ef;
+  --zs-text-2:#aaa9a7;
+  --zs-text-3:#8a8987;
+  --zs-line:#ffffff12;
+  --zs-line-2:#ffffff1c;
+  --zs-line-3:#ffffff2e;
+  --zs-radius:10px;
+  --zs-radius-lg:14px;
+  --zs-radius-pill:999px;
+  --zs-font:Montserrat,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --zs-fs-xs:12px;
+  --zs-fs-sm:14px;
+  --zs-fs-base:16px;
+  --zs-fs-lg:18px;
+  --zs-fs-h2:20px;
+  --zs-fs-display:36px;
+  --zs-lh-xs:16px;
+  --zs-lh-sm:20px;
+  --zs-lh-base:24px;
+  --zs-lh-lg:28px;
+  --zs-lh-h2:28px;
+  --zs-lh-display:40px;
+  --zs-fw-regular:400;
+  --zs-fw-medium:500;
+  --zs-fw-semibold:600;
+  --zs-fw-bold:700;
+  --zs-sp-2:8px;
+  --zs-sp-3:12px;
+  --zs-sp-4:16px;
+  --zs-sp-5:24px;
+  --zs-sp-6:32px;
+  --zs-sp-7:40px;
+  --zs-sp-8:60px;
+  --zs-sp-9:88px;
+  --zs-gutter:20px;
+  --zs-container:1280px;
+  --zs-bar-h:60px;
+  --zs-bar-gap:12px;
+  --zs-ease:cubic-bezier(.4,0,.2,1);
+  --zs-t:150ms var(--zs-ease);
+  --zz-team1:#8fcafb;
+  --zz-team2:#f19aa4;
+  --zz-red-zone:#ed2638;
+  --zz-warn:#f4c27b;
+  --zz-ok:#addeb2;
+  --zz-danger:#f19aa4;
+  --zz-map-surface:#10191e;
+  --zz-map-bg:#101314;
+  --zz-stage-top:#26303a;
+  --zz-stage-bottom:#11151b;
+  --zz-radius-xs:6px;
+  --zz-surface-solid:var(--zs-overlay);
+  --zz-sidebar-w:295px;
+  --bg:var(--zs-bg);
+  --surface:var(--zs-surface-2);
+  --raised:var(--zs-surface);
+  --line:var(--zs-line);
+  --line2:var(--zs-line-2);
+  --accent:var(--zs-accent);
+  --text:var(--zs-text);
+  --muted:var(--zs-text-2);
+  --dim:var(--zs-text-3);
+  --radius:var(--zs-radius);
   color-scheme:dark;
   font-family:Montserrat,system-ui,sans-serif;
   font-synthesis:none
@@ -18,8 +79,8 @@
 }
 body {
   margin:0;
-  background:var(--bg);
-  color:var(--text);
+  background:var(--zs-bg);
+  color:var(--zs-text);
   font-size:13px;
   font-weight:500;
   -webkit-font-smoothing:antialiased
@@ -46,7 +107,7 @@ a {
   text-decoration:none
 }
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
-  outline:2px solid var(--accent);
+  outline:2px solid var(--zs-accent);
   outline-offset:3px
 }
 button {
@@ -65,9 +126,9 @@ span[data-icon] {
   flex:none
 }
 input,select,textarea {
-  color:var(--text);
+  color:var(--zs-text);
   background:#101213;
-  border:1px solid var(--line2);
+  border:1px solid var(--zs-line-2);
   border-radius:7px;
   padding:11px;
   outline:none;
@@ -80,7 +141,7 @@ input:focus,select:focus,textarea:focus {
   border-color:#b5e8fa80
 }
 input[type=checkbox] {
-  accent-color:var(--accent);
+  accent-color:var(--zs-accent);
   width:15px;
   height:15px
 }
@@ -98,7 +159,7 @@ h3 {
   font-size:13px
 }
 .muted {
-  color:var(--muted)
+  color:var(--zs-text-2)
 }
 .little {
   font-size:11px
@@ -106,7 +167,7 @@ h3 {
 .eyebrow {
   font-size:10px;
   font-weight:700;
-  color:var(--dim);
+  color:var(--zs-text-3);
   letter-spacing:1.6px
 }
 .skip-link {
@@ -117,7 +178,7 @@ h3 {
 }
 .skip-link:focus {
   left:20px;
-  background:var(--accent);
+  background:var(--zs-accent);
   color:#111;
   padding:12px
 }
@@ -132,7 +193,7 @@ h3 {
   gap:12px;
   align-items:center;
   padding:0 20px;
-  border:1px solid var(--line);
+  border:1px solid var(--zs-line);
   border-radius:10px;
   background:#0d0e0fe8;
   backdrop-filter:blur(12px)
@@ -160,14 +221,14 @@ h3 {
   border-radius:7px
 }
 .zs-nav a:hover {
-  background:var(--line)
+  background:var(--zs-line)
 }
 .zs-nav a.active {
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .login {
   margin-left:auto;
-  background:var(--accent);
+  background:var(--zs-accent);
   color:#111;
   font-size:12px;
   line-height:18px;
@@ -202,7 +263,7 @@ h3 {
   display:flex;
   align-items:center;
   gap:6px;
-  color:var(--accent);
+  color:var(--zs-accent);
   font-size:9px;
   letter-spacing:.9px
 }
@@ -225,7 +286,7 @@ h3 {
 .page-heading p {
   margin-top:9px;
   font-size:13px;
-  color:var(--muted);
+  color:var(--zs-text-2);
   line-height:1.6
 }
 .button {
@@ -242,7 +303,7 @@ h3 {
   border:1px solid transparent
 }
 .button.primary {
-  background:var(--accent);
+  background:var(--zs-accent);
   color:#111
 }
 .button.primary:hover,.login:hover {
@@ -250,7 +311,7 @@ h3 {
 }
 .button.secondary {
   background:#141617;
-  border-color:var(--line2);
+  border-color:var(--zs-line-2);
   color:#c2c5c5
 }
 .button.secondary:hover {
@@ -271,7 +332,7 @@ h3 {
   justify-content:center;
   border-radius:7px;
   background:#1a1e20;
-  border:1px solid var(--line2)
+  border:1px solid var(--zs-line-2)
 }
 .icon-button:hover {
   background:#2a3338
@@ -279,17 +340,17 @@ h3 {
 .text-button {
   background:transparent;
   padding:0;
-  color:var(--muted);
+  color:var(--zs-text-2);
   font-size:10px
 }
 .text-button:hover {
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .workspace {
   overflow:hidden;
-  border:1px solid var(--line2);
+  border:1px solid var(--zs-line-2);
   border-radius:12px;
-  background:var(--surface);
+  background:var(--zs-surface-2);
   box-shadow:0 12px 40px #0002
 }
 .workspace-bar {
@@ -298,7 +359,7 @@ h3 {
   justify-content:space-between;
   align-items:center;
   gap:16px;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--zs-line)
 }
 .workspace-label {
   display:flex;
@@ -309,7 +370,7 @@ h3 {
   letter-spacing:.8px
 }
 .workspace-label>span[data-icon] {
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .workspace-label .little {
   font-weight:500;
@@ -335,12 +396,12 @@ h3 {
   display:flex;
   flex-direction:column;
   min-height:0;
-  border-right:1px solid var(--line2);
+  border-right:1px solid var(--zs-line-2);
   background:#131617
 }
 .map-choice {
   padding:16px;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--zs-line)
 }
 .selected-map {
   height:85px;
@@ -385,7 +446,7 @@ h3 {
   justify-content:space-between;
   width:100%;
   margin-top:10px;
-  color:var(--accent);
+  color:var(--zs-accent);
   background:#b5e8fa09;
   border:1px solid #b5e8fa25;
   padding:9px 11px;
@@ -400,20 +461,20 @@ h3 {
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   padding:0 12px;
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid var(--zs-line);
   flex-shrink:0
 }
 .side-tabs button {
   background:none;
-  color:var(--muted);
+  color:var(--zs-text-2);
   padding:15px 4px;
   font-size:10px;
   font-weight:600;
   border-bottom:2px solid transparent
 }
 .side-tabs button[aria-selected=true] {
-  color:var(--accent);
-  border-bottom-color:var(--accent)
+  color:var(--zs-accent);
+  border-bottom-color:var(--zs-accent)
 }
 #plan-count {
   font-size:9px;
@@ -437,7 +498,7 @@ h3 {
   margin:10px 0 16px
 }
 .mode-pill {
-  border:1px solid var(--line2);
+  border:1px solid var(--zs-line-2);
   border-radius:4px;
   color:#939b9f;
   background:transparent;
@@ -446,7 +507,7 @@ h3 {
   font-weight:600
 }
 .mode-pill.active {
-  color:var(--accent);
+  color:var(--zs-accent);
   border-color:#b5e8fa44;
   background:#b5e8fa0d
 }
@@ -458,14 +519,14 @@ h3 {
 }
 .layer-label span {
   font-size:9px;
-  color:var(--dim);
+  color:var(--zs-text-3);
   letter-spacing:.8px
 }
 .layer-card {
   width:100%;
   display:block;
   text-align:left;
-  border:1px solid var(--line);
+  border:1px solid var(--zs-line);
   border-radius:7px;
   padding:12px;
   margin-bottom:7px;
@@ -480,14 +541,14 @@ h3 {
 .layer-card.selected {
   border-color:#b5e8fa65;
   background:#b5e8fa0a;
-  color:var(--text)
+  color:var(--zs-text)
 }
 .layer-card.selected:before {
   content:'';
   position:absolute;
   width:3px;
   height:22px;
-  background:var(--accent);
+  background:var(--zs-accent);
   left:-1px;
   top:14px;
   border-radius:0 2px 2px 0
@@ -501,7 +562,7 @@ h3 {
 .layer-title svg {
   width:14px!important;
   height:14px!important;
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .layer-sub {
   display:flex;
@@ -614,7 +675,7 @@ h3 {
   color:white
 }
 .tool.active {
-  background:var(--accent);
+  background:var(--zs-accent);
   color:#152027
 }
 .tool-separator {
@@ -633,7 +694,7 @@ h3 {
 }
 .view-tools>.tool,.zoom-tools {
   border:1px solid #ffffff22;
-  background:#111719ed;
+  background:var(--zz-surface-solid);
   border-radius:6px;
   box-shadow:0 3px 15px #0003
 }
@@ -652,7 +713,7 @@ h3 {
   z-index:500;
   display:flex;
   gap:13px;
-  background:#111719ed;
+  background:var(--zz-surface-solid);
   padding:10px 12px;
   border:1px solid #ffffff18;
   border-radius:6px;
@@ -738,7 +799,7 @@ h3 {
   align-items:center;
   justify-content:space-between;
   padding:16px 20px;
-  border-top:1px solid var(--line);
+  border-top:1px solid var(--zs-line);
   gap:12px;
   background:#15191a
 }
@@ -756,7 +817,7 @@ h3 {
   background:#b5e8fa0d;
   border:1px solid #b5e8fa22;
   border-radius:6px;
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .team-emblem.red {
   color:#e0abaa;
@@ -817,7 +878,7 @@ footer {
   display:flex;
   align-items:center;
   gap:22px;
-  border-top:1px solid var(--line);
+  border-top:1px solid var(--zs-line);
   padding:22px 40px;
   margin-top:10px;
   font-size:10px;
@@ -841,7 +902,7 @@ footer small {
   right:60px;
   top:16px;
   z-index:600;
-  background:#111719f5;
+  background:var(--zz-surface-solid);
   border:1px solid #ffffff25;
   padding:15px;
   border-radius:8px;
@@ -870,7 +931,7 @@ footer small {
   border:1px solid #ffffff26;
   border-radius:8px;
   padding:15px;
-  background:#111719f5;
+  background:var(--zz-surface-solid);
   box-shadow:0 6px 22px #0005
 }
 .point-detail h3 {
@@ -926,7 +987,7 @@ footer small {
   margin:13px 0 6px
 }
 .vehicle {
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid var(--zs-line);
   padding:11px 0
 }
 .vehicle-line {
@@ -938,7 +999,7 @@ footer small {
   color:#d6dedf
 }
 .vehicle-line b {
-  color:var(--accent);
+  color:var(--zs-accent);
   font-size:10px
 }
 .vehicle-meta {
@@ -969,7 +1030,7 @@ footer small {
   font-size:10px
 }
 .plan-item {
-  border:1px solid var(--line);
+  border:1px solid var(--zs-line);
   padding:10px;
   margin-top:7px;
   border-radius:6px;
@@ -979,7 +1040,7 @@ footer small {
   display:flex;
   align-items:center;
   gap:8px;
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .plan-item-top input {
   border:0;
@@ -1034,7 +1095,7 @@ footer small {
   color:#db9f9f!important
 }
 dialog {
-  color:var(--text);
+  color:var(--zs-text);
   background:#141718;
   border:1px solid #ffffff24;
   border-radius:14px;
@@ -1054,7 +1115,7 @@ dialog::backdrop {
   justify-content:space-between;
   align-items:center;
   padding:24px 27px;
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid var(--zs-line);
   gap:15px
 }
 .dialog-heading .eyebrow {
@@ -1074,7 +1135,7 @@ dialog::backdrop {
   display:flex;
   align-items:center;
   gap:10px;
-  border:1px solid var(--line2);
+  border:1px solid var(--zs-line-2);
   border-radius:7px;
   padding:0 12px;
   color:#82929b;
@@ -1098,7 +1159,7 @@ dialog::backdrop {
   max-width:190px
 }
 .library-filters button[aria-pressed=true] {
-  color:var(--accent);
+  color:var(--zs-accent);
   border-color:#b5e8fa70
 }
 .library-meta {
@@ -1210,7 +1271,7 @@ dialog::backdrop {
   margin-bottom:12px
 }
 #info-body a {
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .help-row {
   display:flex;
@@ -1218,7 +1279,7 @@ dialog::backdrop {
   margin-bottom:15px
 }
 .help-row>span {
-  color:var(--accent);
+  color:var(--zs-accent);
   margin-top:3px
 }
 .help-row strong {
@@ -1244,7 +1305,7 @@ dialog::backdrop {
   justify-content:space-between;
   gap:10px;
   padding:14px 0;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--zs-line)
 }
 .saved-plan strong {
   display:block;
@@ -1316,7 +1377,7 @@ dialog::backdrop {
 }
 .help-row>svg {
   margin-top:3px;
-  color:var(--accent)
+  color:var(--zs-accent)
 }
 .workspace-body {
   height:560px
@@ -1528,7 +1589,7 @@ dialog::backdrop {
   }
   .sidebar {
     border-right:0;
-    border-top:1px solid var(--line2)
+    border-top:1px solid var(--zs-line-2)
   }
   .map-choice {
     display:flex;
@@ -1729,7 +1790,7 @@ dialog::backdrop {
   }
 }
 :root {
-  accent-color: #b5e8fa;
+  accent-color:var(--zs-accent);
 }
 .side-tabs {
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -1957,7 +2018,7 @@ dialog::backdrop {
   left:16px;
   bottom:48px;
   z-index:500;
-  background:#111619e8;
+  background:var(--zz-surface-solid);
   border:1px solid #ffffff20;
   border-radius:6px;
   padding:9px 11px;
@@ -2155,7 +2216,7 @@ dialog::backdrop {
   align-items:center;
   gap:6px;
   padding:9px;
-  background:#111719f5;
+  background:var(--zz-surface-solid);
   border:1px solid #f4253870;
   border-radius:8px;
   max-width:calc(100% - 110px);
@@ -2244,16 +2305,16 @@ dialog::backdrop {
   top:50%
 }
 .region-handle:focus-visible {
-  outline:2px solid var(--accent);
+  outline:2px solid var(--zs-accent);
   outline-offset:2px
 }
 .region-library {
-  border-top:1px solid var(--line2);
+  border-top:1px solid var(--zs-line-2);
   margin-top:18px;
   padding-top:14px
 }
 .region-library summary {
-  color:var(--accent);
+  color:var(--zs-accent);
   cursor:pointer;
   font-size:11px;
   line-height:1.6
@@ -2357,7 +2418,7 @@ dialog::backdrop {
 }
 .terrain-profile {
   width:100%;
-  background:#10191e;
+  background:var(--zz-map-surface);
   border:1px solid #b5e8fa25;
   border-radius:8px
 }
@@ -2591,27 +2652,27 @@ dialog::backdrop {
 }
 /* Accessible palettes retain labels, shapes and dash patterns in every mode. */
 .workspace.colorblind {
-  --accent:var(--cb-team1)
+  --zs-accent:var(--cb-team1)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc {
-  background:#10191e;
+  background:var(--zz-map-surface);
   color:white;
   border-color:#eee
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-selected {
-  background:#10191e;
+  background:var(--zz-map-surface);
   border-color:var(--cb-selected);
   border-radius:3px;
-  box-shadow:0 0 0 2px #10191e
+  box-shadow:0 0 0 2px var(--zz-map-surface)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-next {
-  background:#10191e;
+  background:var(--zz-map-surface);
   border-color:var(--cb-next);
   border-style:dashed;
-  box-shadow:0 0 0 3px #10191e
+  box-shadow:0 0 0 3px var(--zz-map-surface)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.is-main {
-  background:#10191e;
+  background:var(--zz-map-surface);
   border-color:var(--cb-team1);
   transform:none;
   border-radius:2px
@@ -2621,7 +2682,7 @@ dialog::backdrop {
   font-size:11px
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.is-main.team-red {
-  background:#10191e;
+  background:var(--zz-map-surface);
   border-color:var(--cb-team2);
   transform:rotate(45deg)
 }
@@ -2640,7 +2701,7 @@ dialog::backdrop {
 .workspace.colorblind .capture-path button {
   color:var(--cb-selected);
   border-color:var(--cb-selected);
-  background:#10191e
+  background:var(--zz-map-surface)
 }
 .workspace.colorblind .capture-next button,.workspace.colorblind .capture-next b {
   color:var(--cb-next);
@@ -2650,16 +2711,16 @@ dialog::backdrop {
 .workspace.colorblind .team-emblem,.workspace.colorblind .faction-code {
   color:var(--cb-team1);
   border-color:var(--cb-team1);
-  background:#10191e
+  background:var(--zz-map-surface)
 }
 .workspace.colorblind .team-emblem.red,.workspace.colorblind .faction-code.red {
   color:var(--cb-team2);
   border-color:var(--cb-team2);
-  background:#10191e
+  background:var(--zz-map-surface)
 }
 .workspace.colorblind .prediction .lane-chip {
   color:#fff;
-  background:#10191e;
+  background:var(--zz-map-surface);
   border:1px solid #ddd
 }
 .workspace.colorblind .zz-capture-chance {
@@ -2669,7 +2730,7 @@ dialog::backdrop {
 .workspace.colorblind .zz-mortar {
   color:var(--cb-flight);
   border-color:var(--cb-flight);
-  background:#10191e
+  background:var(--zz-map-surface)
 }
 .workspace.colorblind .over-budget,.workspace.colorblind .danger {
   color:var(--cb-team2)!important;
@@ -2735,7 +2796,7 @@ dialog::backdrop {
   transform:rotate(45deg)
 }
 .workspace.colorblind .legend-dot.white {
-  background:#10191e;
+  background:var(--zz-map-surface);
   border:1px dashed white
 }
 .scene-summary {
@@ -2788,7 +2849,7 @@ dialog::backdrop {
   display:flex;
   align-items:center;
   gap:9px;
-  background:#10191ef2;
+  background:var(--zz-surface-solid);
   border:1px solid #c4eafa44;
   border-radius:6px;
   padding:6px 9px;
@@ -2831,12 +2892,12 @@ dialog::backdrop {
 }
 /* Accessibility applies at body scope, including modal dialogs and the full terrain scene. */
 body.colorblind {
-  --accent:var(--cb-team1);
-  --text:#f5f5f5;
-  --muted:#c3c3c3;
-  --dim:#b6b6b6;
-  --line:#ffffff30;
-  --line2:#ffffff65
+  --zs-accent:var(--cb-team1);
+  --zs-text:#f5f5f5;
+  --zs-text-2:#c3c3c3;
+  --zs-text-3:#b6b6b6;
+  --zs-line:#ffffff30;
+  --zs-line-2:#ffffff65
 }
 body.colorblind :is(input,select,textarea) {
   border-color:#919191
@@ -2847,7 +2908,7 @@ body.colorblind :is(input,select,textarea):focus {
 }
 body.colorblind :is(.button.primary,.mode-pill.active,.drawing-button.active,.tool-button.active) {
   background:var(--cb-team1);
-  color:#10191e;
+  color:var(--zz-map-surface);
   border:2px solid #fff
 }
 body.colorblind :is(.danger,.over-budget,.terrain-status.over-budget) {
@@ -2859,7 +2920,7 @@ body.colorblind :is(.danger,.over-budget)::before {
   font-weight:800
 }
 body.colorblind :is(.side-note,.vehicle-meta,.build-row small,.form-label,.scene-summary,.scene-summary~details) {
-  color:var(--muted)
+  color:var(--zs-text-2)
 }
 body.colorblind :is(.terrain-legend,.accent-note,.counting,.budget-grid b) {
   color:var(--cb-team1)
@@ -2889,7 +2950,7 @@ body.colorblind .colour-swatches button[aria-pressed=true] {
 }
 .pinned-timer small {
   display:block;
-  color:var(--muted);
+  color:var(--zs-text-2);
   font-size:9px;
   max-width:190px;
   overflow:hidden;
@@ -2899,12 +2960,12 @@ body.colorblind .terrain-profile text {
   fill:#fff
 }
 body.colorblind dialog {
-  --accent:var(--cb-team1);
-  color:var(--text);
+  --zs-accent:var(--cb-team1);
+  color:var(--zs-text);
   border-color:#aaa
 }
 body.colorblind :is(.map-card,.layer-card,.vehicle,.timer-row,.build-row) {
-  border-color:var(--line2)
+  border-color:var(--zs-line-2)
 }
 body.colorblind .map-card.selected {
   outline:2px solid var(--cb-team1)
@@ -2934,7 +2995,7 @@ body.colorblind :is(.selected-map,.map-thumb) {
   filter:var(--map-image-filter)
 }
 body.colorblind :is(.vehicle-meta,.team-unit-name,.team-strip small,.terrain-controls>span:not(.terrain-legend)) {
-  color:var(--muted)
+  color:var(--zs-text-2)
 }
 .zz-category-marker .zz-draw-code {
   position:absolute;
@@ -2948,7 +3009,7 @@ body.colorblind :is(.over-budget,.over-budget b) {
   color:var(--cb-team2)!important
 }
 body.colorblind :is(.map-change,.side-note.accent-note,.budget-grid>div,.terrain-readout,.terrain-profile,.region-copy-preview) {
-  border-color:var(--line2);
+  border-color:var(--zs-line-2);
   background:#151c20
 }
 body.colorblind :is(.range-label output,.stepper button,.region-help summary,.timer-row output) {
@@ -2959,7 +3020,7 @@ body.colorblind :is(.timer-row output.counting,.terrain-playback output,.observa
 }
 body.colorblind .map-heading .heading-mode {
   background:var(--cb-team1);
-  color:#10191e
+  color:var(--zz-map-surface)
 }
 body.colorblind .region-drawbar {
   border-color:var(--cb-team2)
@@ -3009,7 +3070,7 @@ body.colorblind .terrain-dialog canvas:focus-visible {
   min-height:78px
 }
 .vehicle-class-icon small {
-  color:var(--muted)
+  color:var(--zs-text-2)
 }
 .build-row:has(.vehicle-visual) {
   display:grid;
