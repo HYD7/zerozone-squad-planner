@@ -27,24 +27,24 @@ function injectStyles() {
     .zz-tactical-map .zz-objective{display:flex;flex-direction:column;align-items:center;gap:5px;transform:translate(-50%,-15px);width:max-content;max-width:220px;user-select:none;pointer-events:none}
     .zz-tactical-map .zz-objective-disc{pointer-events:auto}
     .zz-tactical-map .zz-objective.is-dense{transform:translate(-50%,-11px)}
-    .zz-tactical-map .zz-objective-disc{display:grid;place-items:center;width:29px;height:29px;border:2px solid var(--zs-accent,#d2eff8);border-radius:50%;background:var(--zz-map-surface,#152831dc);color:var(--zs-text,#fff);font-size:11px;font-weight:800;box-shadow:0 2px 14px var(--zs-shadow,#000a)}
-    .zz-tactical-map .zz-objective-disc.is-main{border-radius:var(--zz-radius-xs,6px);transform:rotate(45deg);background:var(--zz-team1,#0d345ce6);border-color:var(--zz-team1,#8fcafb);width:32px;height:32px}
+    .zz-tactical-map .zz-objective-disc{display:grid;place-items:center;width:29px;height:29px;border:2px solid var(--zs-accent,#d2eff8);border-radius:50%;background:var(--zz-map-surface,#152831dc);color:var(--zs-text,#fff);font-size:11px;font-weight:800;box-shadow:0 2px 14px var(--zz-shadow,#000a)}
+    .zz-tactical-map .zz-objective-disc.is-main{border-radius:var(--zz-radius-xs,6px);transform:rotate(45deg);background:var(--zz-team1-bg,#0d345ce6);border-color:var(--zz-team1,#8fcafb);width:32px;height:32px}
     .zz-tactical-map .zz-objective-disc.is-main span{transform:rotate(-45deg);font-size:17px}
-    .zz-tactical-map .zz-objective-disc.team-red{background:var(--zz-team2,#632932e6);border-color:var(--zz-danger,#f19aa4)}
+    .zz-tactical-map .zz-objective-disc.team-red{background:var(--zz-team2-bg,#632932e6);border-color:var(--zz-team2,#f19aa4)}
     .zz-tactical-map .zz-objective-disc.dense{width:21px;height:21px;font-size:8px;border-width:1.5px}
-    .zz-tactical-map .zz-objective-disc.capture-selected{background:var(--zz-ok,#255441);border-color:var(--zz-ok,#addeb2);color:var(--zs-text,#effff5)}
-    .zz-tactical-map .zz-objective-disc.capture-next{background:var(--zz-map-surface,#173c4c);border-color:var(--zs-accent,#b5e8fa);box-shadow:0 0 0 4px color-mix(in srgb,var(--zs-accent,#b5e8fa) 12%,transparent),0 2px 10px var(--zs-shadow,#0009)}
+    .zz-tactical-map .zz-objective-disc.capture-selected{background:var(--zz-ok-bg,#255441);border-color:var(--zz-ok,#addeb2);color:var(--zs-text,#effff5)}
+    .zz-tactical-map .zz-objective-disc.capture-next{background:var(--zz-next-bg,#173c4c);border-color:var(--zs-accent,#b5e8fa);box-shadow:0 0 0 4px color-mix(in srgb,var(--zs-accent,#b5e8fa) 12%,transparent),0 2px 10px var(--zz-shadow,#0009)}
     .zz-tactical-map .zz-objective.capture-future{opacity:.5}
     .zz-tactical-map .zz-capture-chance{color:var(--zs-accent,#b5e8fa);background:var(--zs-surface-2,#101619ed);border:1px solid color-mix(in srgb,var(--zs-accent,#b5e8fa) 31%,transparent);border-radius:var(--zz-radius-xs,6px);padding:2px 5px;font-size:var(--zs-fs-xs,12px);font-weight:700;line-height:1.3}
-    .zz-tactical-map .zz-objective-name{font-size:var(--zs-fs-xs,12px);line-height:1.35;font-weight:700;color:var(--zs-text,#fff);text-shadow:0 1px 4px var(--zs-shadow,#000),0 0 7px var(--zs-shadow,#000);padding:3px 7px;border-radius:var(--zz-radius-xs,6px);background:var(--zs-surface-2,#121619c7);max-width:210px;text-align:center;white-space:nowrap}
-    .zz-tactical-map .zz-grid-label{color:var(--zs-text,#e9f2f0);font-size:var(--zs-fs-xs,12px);font-weight:700;line-height:var(--zs-lh-xs,16px);text-shadow:0 1px 4px var(--zs-shadow,#000),0 0 5px var(--zs-shadow,#000);white-space:nowrap;pointer-events:none}
-    .zz-tactical-map .zz-map-tooltip{border:1px solid var(--zs-line-2,#ffffff25);border-radius:var(--zz-radius-xs,6px);background:var(--zs-surface-2,#111619ed);color:var(--zs-text,#e7f7fc);font:600 var(--zs-fs-xs,12px)/1.5 Montserrat,Arial,sans-serif;padding:5px 8px;box-shadow:0 3px 12px var(--zs-shadow,#0007);white-space:nowrap}
+    .zz-tactical-map .zz-objective-name{font-size:var(--zs-fs-xs,12px);line-height:1.35;font-weight:700;color:var(--zs-text,#fff);text-shadow:0 1px 4px var(--zz-text-shadow,#000),0 0 7px var(--zz-text-shadow,#000);padding:3px 7px;border-radius:var(--zz-radius-xs,6px);background:var(--zs-surface-2,#121619c7);max-width:210px;text-align:center;white-space:nowrap}
+    .zz-tactical-map .zz-grid-label{color:var(--zs-text,#e9f2f0);font-size:var(--zs-fs-xs,12px);font-weight:700;line-height:var(--zs-lh-xs,16px);text-shadow:0 1px 4px var(--zz-text-shadow,#000),0 0 5px var(--zz-text-shadow,#000);white-space:nowrap;pointer-events:none}
+    .zz-tactical-map .zz-map-tooltip{border:1px solid var(--zs-line-2,#ffffff25);border-radius:var(--zz-radius-xs,6px);background:var(--zs-surface-2,#111619ed);color:var(--zs-text,#e7f7fc);font:600 var(--zs-fs-xs,12px)/1.5 Montserrat,Arial,sans-serif;padding:5px 8px;box-shadow:0 3px 12px var(--zz-shadow,#0007);white-space:nowrap}
     .zz-tactical-map .zz-map-tooltip::before{display:none}
-    .zz-tactical-map .zz-pin{width:27px;height:34px;filter:drop-shadow(0 2px 5px var(--zs-shadow,#0008));transform:translate(-50%,-100%)}
-    .zz-tactical-map .zz-hab{display:grid;place-items:center;width:31px;height:31px;border:2px solid var(--zs-accent,#b5e8fa);background:var(--zz-map-surface,#14282fe8);color:var(--zs-accent,#b5e8fa);border-radius:var(--zz-radius-xs,6px);transform:translate(-50%,-50%);box-shadow:0 2px 8px var(--zs-shadow,#000a);font-size:18px}
-    .zz-tactical-map .zz-arrow-head{width:24px;height:24px;transform:translate(-50%,-50%);filter:drop-shadow(0 1px 3px var(--zs-shadow,#0008))}
+    .zz-tactical-map .zz-pin{width:27px;height:34px;filter:drop-shadow(0 2px 5px var(--zz-shadow,#0008));transform:translate(-50%,-100%)}
+    .zz-tactical-map .zz-hab{display:grid;place-items:center;width:31px;height:31px;border:2px solid var(--zs-accent,#b5e8fa);background:var(--zz-map-surface,#14282fe8);color:var(--zs-accent,#b5e8fa);border-radius:var(--zz-radius-xs,6px);transform:translate(-50%,-50%);box-shadow:0 2px 8px var(--zz-shadow,#000a);font-size:18px}
+    .zz-tactical-map .zz-arrow-head{width:24px;height:24px;transform:translate(-50%,-50%);filter:drop-shadow(0 1px 3px var(--zz-shadow,#0008))}
     .zz-tactical-map .zz-mortar{display:grid;place-items:center;width:28px;height:28px;border:2px solid var(--zz-warn,#f4c27b);color:var(--zz-warn,#f4c27b);background:var(--zz-map-surface,#32281ced);border-radius:50%;font-size:17px;font-weight:700;transform:translate(-50%,-50%)}
-    .zz-tactical-map .zz-text-label{width:max-content;transform:translate(-50%,6px);color:var(--zs-text,#eaf9ff);background:var(--zs-surface-2,#101619df);border:1px solid var(--zs-line-2,#ffffff20);padding:4px 7px;border-radius:var(--zz-radius-xs,6px);font-size:var(--zs-fs-xs,12px);font-weight:600;line-height:1.45;text-align:center;white-space:nowrap;box-shadow:0 2px 8px var(--zs-shadow,#0005);pointer-events:none}
+    .zz-tactical-map .zz-text-label{width:max-content;transform:translate(-50%,6px);color:var(--zs-text,#eaf9ff);background:var(--zs-surface-2,#101619df);border:1px solid var(--zs-line-2,#ffffff20);padding:4px 7px;border-radius:var(--zz-radius-xs,6px);font-size:var(--zs-fs-xs,12px);font-weight:600;line-height:1.45;text-align:center;white-space:nowrap;box-shadow:0 2px 8px var(--zz-shadow,#0005);pointer-events:none}
     .zz-tactical-map .zz-map-loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:800;padding:12px 18px;border:1px solid color-mix(in srgb,var(--zs-accent,#b5e8fa) 21%,transparent);background:var(--zs-surface-2,#101619ec);border-radius:var(--zs-radius,10px);color:var(--zs-text,#d5ebf3);font:500 var(--zs-fs-xs,12px)/1.5 Montserrat,Arial,sans-serif;pointer-events:none;text-align:center}
     .zz-tactical-map .leaflet-tooltip{pointer-events:none}
     .zz-tactical-map .zz-preview-dot{box-shadow:0 0 0 5px color-mix(in srgb,var(--zs-accent,#b5e8fa) 14%,transparent)}
@@ -535,7 +535,7 @@ export class TacticalMap {
       }
       if (item.tool === 'pin') {
         pinIndex++;
-        const svg=style.symbol==='pin'?`<svg class="zz-pin" viewBox="0 0 27 34" aria-hidden="true"><path d="M13.5 33S1 21 1 13.5a12.5 12.5 0 1 1 25 0C26 21 13.5 33 13.5 33Z" fill="${colour}" stroke="var(--zz-map-bg,#101619)" stroke-width="2"/><circle cx="13.5" cy="13" r="4" fill="var(--zz-surface-solid,#14242c)"/></svg>`:squadSymbol(style.symbol,colour);
+        const svg=style.symbol==='pin'?`<svg class="zz-pin" viewBox="0 0 27 34" aria-hidden="true"><path d="M13.5 33S1 21 1 13.5a12.5 12.5 0 1 1 25 0C26 21 13.5 33 13.5 33Z" fill="${colour}" style="stroke:var(--zz-map-bg,#101619)" stroke-width="2"/><circle cx="13.5" cy="13" r="4" style="fill:var(--zz-surface-solid,#14242c)"/></svg>`:squadSymbol(style.symbol,colour);
         selectable(L.marker(latA, { icon: this._icon(svg), title:item.label||SYMBOLS[style.symbol] }));
         if (this.overlays.labels) this._label(a, escapeHTML(item.label || `İşaret ${pinIndex}`));
       } else if (item.tool === 'hab') {
@@ -552,7 +552,7 @@ export class TacticalMap {
         const latB = this._latLng(b);
         selectable(L.polyline([latA, latB], { color, weight: style.weight, opacity: 0.95, dashArray: appearance.dash||(item.tool === 'arrow'&&!style.dashed ? null : '7 5') }));
         if (item.tool === 'arrow') {
-          const svg = `<div class="zz-arrow-head"><svg width="24" height="24" viewBox="0 0 24 24" style="transform:rotate(${geometry.bearing}deg)"><path d="M12 1L23 23L12 17L1 23Z" fill="${color}" stroke="var(--zz-map-surface,#21323a)" stroke-width="1"/></svg></div>`;
+          const svg = `<div class="zz-arrow-head"><svg width="24" height="24" viewBox="0 0 24 24" style="transform:rotate(${geometry.bearing}deg)"><path d="M12 1L23 23L12 17L1 23Z" fill="${color}" style="stroke:var(--zz-map-surface,#21323a)" stroke-width="1"/></svg></div>`;
           L.marker(latB, { icon: this._icon(svg), interactive: false, keyboard: false }).addTo(this.annotationLayer);
         } else {
           L.circleMarker(latB, { radius: 5, color, weight: 2, fillColor: '#172129', fillOpacity: 1, interactive: false }).addTo(this.annotationLayer);

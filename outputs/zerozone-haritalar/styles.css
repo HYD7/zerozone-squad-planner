@@ -60,6 +60,12 @@
   --zz-radius-xs:6px;
   --zz-surface-solid:var(--zs-overlay);
   --zz-sidebar-w:295px;
+  --zz-team1-bg:#0d345ce6;
+  --zz-team2-bg:#632932e6;
+  --zz-ok-bg:#255441;
+  --zz-next-bg:#173c4c;
+  --zz-text-shadow:#000;
+  --zz-danger-muted:#db9f9f;
   --zz-cb-fg:#fff;
   --zz-cb-edge:#ddd;
   --zz-cb-sky:#56b4e9;
@@ -79,7 +85,7 @@
   --dim:var(--zs-text-3);
   --radius:var(--zs-radius);
   color-scheme:dark;
-  --zs-shadow:#000a;
+  --zz-shadow:#000a;
   font-family:var(--zs-font);
   font-synthesis:none
 }
@@ -141,10 +147,12 @@ input,select,textarea {
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius);
   font-size:var(--zs-fs-sm);
-  min-height:40px;
   padding:9px 12px;
   outline:none;
   max-width:100%
+}
+input:not([type=range],[type=color],[type=checkbox],[type=radio]) {
+  min-height:40px
 }
 input::placeholder,textarea::placeholder {
   color:var(--zs-text-3)
@@ -215,6 +223,7 @@ h3 {
   border:1px solid var(--zs-line);
   border-radius:var(--zs-radius);
   background:var(--zs-surface);
+  -webkit-backdrop-filter:blur(12px);
   backdrop-filter:blur(12px)
 }
 .zs-brand {
@@ -237,25 +246,35 @@ h3 {
   font-weight:var(--zs-fw-medium);
   text-transform:uppercase;
   letter-spacing:0;
-  color:var(--zs-text-2);
+  color:var(--zs-text);
   padding:8px 7px;
   white-space:nowrap;
-  border-radius:var(--zs-radius)
+  border:1px solid transparent;
+  border-radius:var(--zs-radius);
+  background:transparent;
+  transition:background-color var(--zs-t),color var(--zs-t)
 }
-.zs-nav a:hover,.zs-nav a.active {
-  color:var(--zs-accent);
-  background:var(--zs-accent-soft)
+.zs-nav a:hover {
+  background:var(--zs-line);
+  color:var(--zs-text)
+}
+.zs-nav a.active {
+  background:transparent;
+  color:var(--zs-accent)
 }
 .login {
   margin-left:auto;
   background:var(--zs-accent);
   color:var(--zs-on-accent);
   font-size:var(--zs-fs-base);
-  line-height:var(--zs-lh-base);
+  line-height:16px;
+  text-transform:uppercase;
   padding:8px 16px;
+  border:1px solid transparent;
   border-radius:var(--zs-radius);
   white-space:nowrap;
-  font-weight:var(--zs-fw-semibold)
+  font-weight:var(--zs-fw-semibold);
+  transition:filter var(--zs-t)
 }
 .icon-button.mobile-menu {
   display:none
@@ -327,8 +346,11 @@ h3 {
   background:var(--zs-accent);
   color:var(--zs-on-accent)
 }
-.button.primary:hover,.login:hover {
+.button.primary:hover {
   background:color-mix(in srgb,var(--zs-accent) 82%,white)
+}
+.login:hover {
+  filter:brightness(.92)
 }
 .button.secondary {
   background:var(--zs-surface);
@@ -376,7 +398,7 @@ h3 {
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius-lg);
   background:var(--zs-surface-2);
-  box-shadow:0 12px 40px color-mix(in srgb,var(--zs-shadow) 25%,transparent)
+  box-shadow:0 12px 40px color-mix(in srgb,var(--zz-shadow) 25%,transparent)
 }
 .workspace-bar {
   padding:13px 18px;
@@ -486,20 +508,22 @@ h3 {
   background:color-mix(in srgb,var(--zs-accent) 9%,transparent)
 }
 .side-tabs {
-  display:flex;
-  flex-wrap:wrap;
-  gap:2px;
-  padding:0 var(--zs-sp-3);
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:auto;
+  justify-content:space-between;
+  gap:0;
+  padding:0 8px;
   border-bottom:1px solid var(--zs-line);
   flex-shrink:0
 }
 .side-tabs button {
-  flex:1 1 auto;
+  position:relative;
   min-width:0;
   white-space:nowrap;
   background:none;
   color:var(--zs-text-2);
-  padding:8px 10px;
+  padding:10px 3px;
   font-size:var(--zs-fs-xs);
   font-weight:600;
   border-bottom:2px solid transparent;
@@ -514,7 +538,9 @@ h3 {
   background:color-mix(in srgb,var(--zs-text) 4%,transparent);
   border-radius:var(--zz-radius-xs);
   padding:2px 4px;
-  margin-left:3px;
+  position:absolute;
+  top:2px;
+  right:-8px;
   line-height:var(--zs-lh-xs)
 }
 .side-content {
@@ -642,7 +668,8 @@ h3 {
 .side-select {
   width:100%;
   margin-top:7px;
-  font-size:var(--zs-fs-sm)}
+  font-size:var(--zs-fs-sm)
+}
 .map-column {
   min-width:0;
   display:flex;
@@ -778,7 +805,7 @@ h3 {
   background:var(--zz-team1)
 }
 .legend-dot.red {
-  background:var(--zz-danger)
+  background:var(--zz-team2)
 }
 .legend-dot.white {
   background:color-mix(in srgb,var(--zs-accent) 60%,var(--zs-text))
@@ -795,7 +822,7 @@ h3 {
   font-size:var(--zs-fs-xs);
   font-weight:700;
   pointer-events:none;
-  text-shadow:0 2px 4px var(--zs-shadow)
+  text-shadow:0 2px 4px var(--zz-shadow)
 }
 .map-north span {
   font-size:24px;
@@ -1068,7 +1095,8 @@ footer small {
 }
 .form-input {
   width:100%;
-  font-size:var(--zs-fs-sm)}
+  font-size:var(--zs-fs-sm)
+}
 .plan-tools {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1127,7 +1155,8 @@ footer small {
   width:100%;
   padding:8px;
   margin-top:5px;
-  font-size:var(--zs-fs-sm)}
+  font-size:var(--zs-fs-sm)
+}
 .coordinate-form button {
   grid-column:1/-1
 }
@@ -1144,19 +1173,19 @@ footer small {
   height:28px
 }
 .text-button.danger {
-  color:var(--zz-danger)
+  color:var(--zz-danger-muted)
 }
 dialog {
   color:var(--zs-text);
   background:var(--zs-overlay);
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius-lg);
-  box-shadow:0 30px 150px var(--zs-shadow);
+  box-shadow:0 30px 150px var(--zz-shadow);
   padding:0;
   max-height:90vh
 }
 dialog::backdrop {
-  background:color-mix(in srgb,var(--zs-bg) 70%,transparent);
+  background:color-mix(in srgb,var(--zs-bg) 85%,transparent);
   backdrop-filter:blur(7px)
 }
 .library-dialog {
@@ -1387,7 +1416,7 @@ dialog::backdrop {
   border-radius:var(--zs-radius);
   font-size:var(--zs-fs-sm);
   font-weight:600;
-  box-shadow:0 8px 40px var(--zs-shadow)
+  box-shadow:0 8px 40px var(--zz-shadow)
 }
 .workspace.expanded {
   position:fixed;
@@ -1442,7 +1471,7 @@ dialog::backdrop {
     padding:8px 7px
   }
   .workspace {
-    --zz-sidebar-w:320px
+    --zz-sidebar-w:336px
   }
 }
 @media(min-width:1500px) {
@@ -1454,10 +1483,7 @@ dialog::backdrop {
     padding-right:60px
   }
   .workspace {
-    --zz-sidebar-w:340px
-  }
-  .workspace-body {
-    grid-template-columns:var(--zz-sidebar-w) minmax(0,1fr)
+    --zz-sidebar-w:352px
   }
 }
 @media(max-width:1120px) {
@@ -2078,7 +2104,8 @@ dialog::backdrop {
   border:0;
   color:var(--zz-danger);
   cursor:pointer;
-  font-size:var(--zs-fs-lg)}
+  font-size:var(--zs-fs-lg)
+}
 .prediction {
   position:absolute;
   left:16px;
@@ -2309,7 +2336,7 @@ dialog::backdrop {
   color:var(--zz-cb-fg);
   border-radius:var(--zz-radius-xs);
   padding:7px;
-  font:600 10px Montserrat,sans-serif;
+  font:600 var(--zs-fs-xs)/var(--zs-lh-xs) Montserrat,sans-serif;
   cursor:pointer;
   white-space:nowrap
 }
@@ -2337,7 +2364,7 @@ dialog::backdrop {
   color:white;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  font:10px Arial
+  font:var(--zs-fs-xs)/1 Arial
 }
 .region-editor .plan-tools {
   flex-wrap:wrap
@@ -2496,7 +2523,7 @@ dialog::backdrop {
   padding:20px
 }
 .terrain-dialog::backdrop {
-  background:color-mix(in srgb,var(--zs-bg) 70%,transparent);
+  background:color-mix(in srgb,var(--zs-bg) 85%,transparent);
   backdrop-filter:blur(5px)
 }
 .terrain-dialog-head {
@@ -2714,7 +2741,9 @@ dialog::backdrop {
 }
 /* Accessible palettes retain labels, shapes and dash patterns in every mode. */
 .workspace.colorblind {
-  --zs-accent:var(--cb-team1)
+  --zs-accent:var(--cb-team1);
+  --zs-accent-soft:color-mix(in srgb,var(--cb-team1) 6%,transparent);
+  --zs-accent-glow:color-mix(in srgb,var(--cb-team1) 10%,transparent)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc {
   background:var(--zz-map-surface);
@@ -2956,6 +2985,8 @@ dialog::backdrop {
 /* Accessibility applies at body scope, including modal dialogs and the full terrain scene. */
 body.colorblind {
   --zs-accent:var(--cb-team1);
+  --zs-accent-soft:color-mix(in srgb,var(--cb-team1) 6%,transparent);
+  --zs-accent-glow:color-mix(in srgb,var(--cb-team1) 10%,transparent);
   --zs-text:#f5f5f5;
   --zs-text-2:#c3c3c3;
   --zs-text-3:#b6b6b6;

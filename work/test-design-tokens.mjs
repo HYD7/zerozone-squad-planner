@@ -1,4 +1,4 @@
-// Tasarim belirteci denetimi (G2.4). Harici bagimlilik yok. Calistir: node work/design-tokens.check.mjs
+// Tasarim belirteci denetimi (G2.4). Harici bagimlilik yok. Calistir: node work/test-design-tokens.mjs (depo kokunden; ZS_TOKENS_DIR / ZS_TOKENS_FIXTURE ile degistirilebilir)
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
@@ -121,6 +121,12 @@ for (const [p, v] of Object.entries(expected)) {
 if (!rootDecls['--zs-font'] || !/^["']?montserrat/i.test(rootDecls['--zs-font'].value.trim())) {
   fail(1, `${rootDecls['--zs-font'] ? rootLine('--zs-font') : where(styles, 1)} --zs-font Montserrat ile baslamali (bulunan "${rootDecls['--zs-font']?.value ?? 'yok'}")`);
 }
+if (rootDecls['--zs-shadow']) fail(1, `${rootLine('--zs-shadow')} --zs-shadow :root'ta olmamali (sitenin ad alani; --zz-shadow kullanilmali)`);
+if (!rootDecls['--zz-shadow']) fail(1, `${where(styles, 1)} :root icinde --zz-shadow tanimli degil (beklenen #000a)`);
+else if (compact(rootDecls['--zz-shadow'].value) !== '#000a') fail(1, `${rootLine('--zz-shadow')} --zz-shadow = "${rootDecls['--zz-shadow'].value}" (beklenen "#000a")`);
+for (const p of Object.keys(rootDecls)) { // ad alani korumasi
+  if (p.startsWith('--zs-') && p !== '--zs-font' && !(p in expected)) fail(1, `${rootLine(p)} ${p} tokens listesinde yok (--zs- ad alani korumali)`);
+}
 const ZZ_EXPECT = { '--zz-warn': '#f4c27b', '--zz-ok': '#addeb2', '--zz-danger': '#f19aa4', '--zz-map-surface': '#10191e', '--zz-map-bg': '#101314', '--zz-stage-top': '#26303a', '--zz-stage-bottom': '#11151b', '--zz-radius-xs': '6px' };
 for (const p of ['--zz-team1', '--zz-team2', '--zz-red-zone', '--zz-surface-solid', '--zz-sidebar-w']) {
   if (!rootDecls[p]) fail(1, `${where(styles, 1)} :root icinde ${p} tanimli degil`);
@@ -145,10 +151,14 @@ const fixture = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
 const zzRoot = Object.fromEntries(Object.entries(rootDecls)
   .filter(([k, v]) => k.startsWith('--zz-') && /^#[0-9a-f]{3,8}$/i.test(v.value.trim()))
   .map(([k, v]) => [k, v.value.trim().toLowerCase()]));
+const zsRoot = Object.fromEntries(Object.entries(expected)
+  .filter(([, v]) => /^#[0-9a-f]{3,8}$/i.test(v.trim()))
+  .map(([k, v]) => [k, v.trim().toLowerCase()]));
 const ORDER = [['zs-bg', 'bg'], ['zs-surface-2', 'surface'], ['zs-surface', 'raised'], ['zs-line-2', 'line2'], ['zs-line', 'line'], ['zs-accent', 'accent'], ['zs-text-2', 'muted'], ['zs-text-3', 'dim'], ['zs-text', 'text'], ['zs-radius', 'radius']];
 function normalizeBody(b) {
   let s = compact(b);
-  s = s.replace(/var\(--(?:zz|zs)-[\w-]+,(#[0-9a-f]{3,8})\)/g, '$1');
+  // fallback'li var(): yalnizca :root'ta cozulen deger fallback ile ayniysa indirgenir; degilse oldugu gibi kalir
+  s = s.replace(/var\((--(?:zz|zs)-[\w-]+),(#[0-9a-f]{3,8})\)/g, (m, p, fb) => ((p.startsWith('--zz-') ? zzRoot[p] : zsRoot[p]) === fb ? fb : m));
   s = s.replace(/var\((--zz-[\w-]+)\)/g, (m, p) => zzRoot[p] ?? m);
   for (const [a, o] of ORDER) s = s.split(`var(--${a})`).join(`var(--${o})`);
   return s;
@@ -184,13 +194,17 @@ const live = blocks.filter((b) => !b.frozen);
 const HEX = /#[0-9a-fA-F]{3,8}\b/g;
 const stripUrl = (v) => v.replace(/url\((?:"[^"]*"|'[^']*'|[^)]*)\)/gi, 'url()');
 const allowedHex = new Set(['#f5f5f5', '#c3c3c3', '#ffffff30', '#000a']), allowedRgb = new Set();
+const COLOR_FN = /(?:rgba?|hsla?)\([^)]*\)/gi;
+const firstRoot = blocks.find((b) => b.css === styles && b.selector === ':root' && b.top);
+const CB_SEL = /\.colorblind|#map-colorblind|\.high-contrast/;
+const customAllowedBlock = (b) => b === firstRoot || (b.css === styles && CB_SEL.test(b.selector));
 const addColors = (v) => {
   for (const m of v.match(HEX) ?? []) allowedHex.add(m.toLowerCase());
-  for (const m of v.matchAll(/rgba?\([^)]*\)/gi)) allowedRgb.add(compact(m[0]));
+  for (const m of v.matchAll(COLOR_FN)) allowedRgb.add(compact(m[0]));
 };
 Object.values(expected).forEach(addColors);
-for (const [k, v] of Object.entries(rootDecls)) if (k.startsWith('--zz-')) addColors(v.value);
-for (const b of blocks) for (const d of b.decls) if (/^--(zs|cb)-/.test(d.prop) && !(b.selector === ':root' && b.top)) addColors(d.value);
+// izinli liste yalniz ilk :root blogu ve colorblind/high-contrast secicilerinden beslenir
+for (const b of blocks) if (customAllowedBlock(b)) for (const d of b.decls) if (d.prop.startsWith('--')) addColors(d.value);
 
 /* Kural 4 */
 const distinct = new Set();
@@ -199,11 +213,11 @@ for (const b of live) for (const d of b.decls) {
   for (const m of v.match(HEX) ?? []) {
     distinct.add(m.toLowerCase());
     if (!custom) fail(4, `${where(b.css, d.line)} ${b.selector} { ${d.prop}: ${d.value} } hex literal ${m}`);
-    else if (!allowedHex.has(m.toLowerCase())) fail(4, `${where(b.css, d.line)} ${d.prop}: ${d.value} izinli listede olmayan hex ${m}`);
+    else if (!customAllowedBlock(b) || !allowedHex.has(m.toLowerCase())) fail(4, `${where(b.css, d.line)} ${d.prop}: ${d.value} izinli listede olmayan hex ${m}`);
   }
-  for (const m of v.matchAll(/rgba?\([^)]*\)/gi)) {
-    if (!custom) fail(4, `${where(b.css, d.line)} ${b.selector} { ${d.prop}: ${d.value} } rgb/rgba literal ${m[0]}`);
-    else if (!allowedRgb.has(compact(m[0]))) fail(4, `${where(b.css, d.line)} ${d.prop}: ${d.value} izinli listede olmayan ${m[0]}`);
+  for (const m of v.matchAll(COLOR_FN)) {
+    if (!custom) fail(4, `${where(b.css, d.line)} ${b.selector} { ${d.prop}: ${d.value} } rgb/rgba/hsl literal ${m[0]}`);
+    else if (!customAllowedBlock(b) || !allowedRgb.has(compact(m[0]))) fail(4, `${where(b.css, d.line)} ${d.prop}: ${d.value} izinli listede olmayan ${m[0]}`);
   }
 }
 if (distinct.size > 40) fail(4, `iki dosyada (dondurulmus bloklar haric) toplam FARKLI hex sayisi ${distinct.size} (> 40)`);
@@ -230,21 +244,28 @@ const topTokens = (v) => {
   return t;
 };
 const RADIUS_OK = new Set(['var(--zs-radius)', 'var(--zs-radius-lg)', 'var(--zs-radius-pill)', 'var(--zz-radius-xs)', '50%', '0', 'inherit']);
-for (const b of live) for (const d of b.decls) if (d.prop === 'border-radius') {
+for (const b of live) for (const d of b.decls) if (/^border(-(top|bottom)-(left|right))?-radius$/.test(d.prop)) {
   const bad = topTokens(d.value).filter((t) => !RADIUS_OK.has(t.replace(/\s+/g, '')));
-  if (bad.length || !d.value.trim()) fail(6, `${where(b.css, d.line)} ${b.selector} { border-radius: ${d.value} } izinsiz: ${bad.join(' ')}`);
+  if (bad.length || !d.value.trim()) fail(6, `${where(b.css, d.line)} ${b.selector} { ${d.prop}: ${d.value} } izinsiz: ${bad.join(' ')}`);
 }
 
 /* Kural 7 */
-for (const b of live) for (const d of b.decls) if (d.prop === 'font-size') {
-  const v = d.value.trim(), c = compact(v);
-  let ok = false;
-  if (c === 'inherit' || /var\(--zs-fs-[\w-]+\)/.test(c) || /var\(--(label|marker)-size/.test(c)) ok = true;
-  else {
-    const m = c.match(/^(\d*\.?\d+)(px|em|rem|%)$/);
-    if (m) { const n = parseFloat(m[1]); ok = m[2] === 'px' ? n >= 12 : m[2] === '%' ? n >= 75 : n >= 0.75; }
+const sizeOk = (c) => {
+  if (c === 'inherit' || /var\(--zs-fs-[\w-]+\)/.test(c) || /var\(--(label|marker)-size/.test(c)) return true;
+  const m = c.match(/^(\d*\.?\d+)(px|em|rem|%)$/);
+  if (!m) return false;
+  const n = parseFloat(m[1]);
+  return m[2] === 'px' ? n >= 12 : m[2] === '%' ? n >= 75 : n >= 0.75;
+};
+for (const b of live) for (const d of b.decls) {
+  const v = d.value.trim();
+  if (d.prop === 'font-size') {
+    if (!sizeOk(compact(v))) fail(7, `${where(b.css, d.line)} ${b.selector} { font-size: ${v} } 12px alti veya belirtec disi`);
+  } else if (d.prop === 'font') {
+    if (compact(v) === 'inherit' || /var\(--zs-fs-[\w-]+\)/.test(v)) continue;
+    const m = v.match(/(?:^|\s)(\d*\.?\d+)(px|em|rem|%)(?:\/|\s|$)/);
+    if (!m || !sizeOk(m[1] + m[2])) fail(7, `${where(b.css, d.line)} ${b.selector} { font: ${v} } 12px alti veya boyut ayiklanamadi`);
   }
-  if (!ok) fail(7, `${where(b.css, d.line)} ${b.selector} { font-size: ${v} } 12px alti veya belirtec disi`);
 }
 
 /* Kural 8 */
@@ -252,7 +273,7 @@ for (const b of live) for (const d of b.decls) if (d.prop === 'font-size') {
   const merged = (sel) => {
     const m = {};
     for (const b of live) {
-      if (b.css === styles && b.selector === sel && b.at.every((a) => /^@media\s*\(\s*min-width/i.test(a))) for (const d of b.decls) m[d.prop] = d;
+      if (b.css === styles && b.selector.split(',').map((x) => x.trim()).includes(sel) && b.at.every((a) => /^@media\s*\(\s*min-width/i.test(a))) for (const d of b.decls) m[d.prop] = d;
     }
     return m;
   };
@@ -269,7 +290,18 @@ for (const b of live) for (const d of b.decls) if (d.prop === 'font-size') {
   need('.zs-topbar', t, 'background', eq('var(--zs-surface)'), 'var(--zs-surface)');
   need('.zs-topbar', t, 'border', eq('1pxsolidvar(--zs-line)'), '1px solid var(--zs-line)');
   need('.zs-topbar', t, 'backdrop-filter', (c) => c.includes('blur(12px)'), 'blur(12px) icerir');
+  need('.zs-topbar', t, '-webkit-backdrop-filter', (c) => c.includes('blur(12px)'), '-webkit-backdrop-filter blur(12px) icerir');
   const n = merged('.zs-nav a');
+  need('.zs-nav a', n, 'color', eq('var(--zs-text)'), 'var(--zs-text)');
+  need('.zs-nav a', n, 'border', eq('1pxsolidtransparent'), '1px solid transparent');
+  const h = merged('.zs-nav a:hover');
+  if (!h.background && h['background-color']) h.background = h['background-color'];
+  need('.zs-nav a:hover', h, 'background', eq('var(--zs-line)'), 'var(--zs-line)');
+  const ac = { ...merged('.zs-nav a[aria-current]'), ...merged('.zs-nav a.active') };
+  need('.zs-nav a.active/[aria-current]', ac, 'color', eq('var(--zs-accent)'), 'var(--zs-accent)');
+  const lg = merged('.login');
+  need('.login', lg, 'text-transform', eq('uppercase'), 'uppercase');
+  need('.login', lg, 'line-height', eq('16px', 'var(--zs-lh-xs)'), '16px');
   need('.zs-nav a', n, 'font-size', eq('var(--zs-fs-sm)'), 'var(--zs-fs-sm)');
   need('.zs-nav a', n, 'line-height', eq('var(--zs-lh-xs)', '16px'), 'var(--zs-lh-xs) veya 16px');
   need('.zs-nav a', n, 'font-weight', eq('var(--zs-fw-medium)', '500'), 'var(--zs-fw-medium) veya 500');
