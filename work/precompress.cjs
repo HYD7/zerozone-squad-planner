@@ -35,6 +35,12 @@ function* gez(dizin) {
 function calistir(a) {
   const kok = path.resolve(a.kok);
   const s = { uretilen: 0, atlanan: 0, silinen: 0, once: 0, sonra: 0 };
+  // Önceki kesintiden kalan geçici dosyaları temizle
+  for (const f of [...gez(kok)]) {
+    if (!f.includes('.tmp-')) continue;
+    if (!/\.(br|gz)\.tmp-\d+$/.test(f)) continue;
+    if (!a.kuru) fs.unlinkSync(f);
+  }
   const tum = [...gez(kok)];
   const guncel = (hedef, st) => {
     try { return fs.statSync(hedef).mtimeMs >= st.mtimeMs - 2; } catch { return false; }
@@ -58,8 +64,16 @@ function calistir(a) {
             [zlib.constants.BROTLI_PARAM_QUALITY]: a.kalite,
             [zlib.constants.BROTLI_PARAM_SIZE_HINT]: buf.length } })
         : zlib.gzipSync(buf, { level: 9 });
-      fs.writeFileSync(h, out);
-      fs.utimesSync(h, st.mtimeMs / 1000, st.mtimeMs / 1000);
+      const tmp = h + '.tmp-' + process.pid;
+      try {
+        fs.writeFileSync(tmp, out);
+        const geri = tur === 'br' ? zlib.brotliDecompressSync(fs.readFileSync(tmp)) : zlib.gunzipSync(fs.readFileSync(tmp));
+        if (geri.length !== buf.length) throw new Error('Self-check başarısız: ' + h);
+        fs.utimesSync(tmp, st.mtimeMs / 1000, st.mtimeMs / 1000);
+        fs.renameSync(tmp, h);
+      } finally {
+        try { fs.unlinkSync(tmp); } catch {}
+      }
       s.uretilen++; s.once += buf.length; s.sonra += out.length;
     }
   }

@@ -4,7 +4,7 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#111112">
   <title>Haritalar — Zero Zone Community</title>
-  <meta name="description" content="Zero Zone Squad haritaları ve taktik planlama. Özel önizleme.">
+  <meta name="description" content="Zero Zone Squad haritaları ve taktik planlama.">
   <link rel="icon" href="assets/brand/favicon.png"><link rel="stylesheet" href="assets/brand/fonts.css">
   <link rel="stylesheet" href="assets/vendor/leaflet.css"><link rel="stylesheet" href="styles.css">
 </head>
@@ -19,7 +19,7 @@
   <button class="icon-button mobile-menu" data-action="menu" aria-label="Menüyü aç" aria-expanded="false"><span data-icon="menu"></span></button>
 </header>
 <main id="main" class="page">
-  <div class="breadcrumb"><span>ZERO ZONE COMMUNITY <span class="crumb-slash">/</span> OPERASYON MERKEZİ</span><span class="private-tag"><span data-icon="lock"></span> ÖZEL ÖNİZLEME</span></div>
+  <div class="breadcrumb"><span>ZERO ZONE COMMUNITY <span class="crumb-slash">/</span> OPERASYON MERKEZİ</span><span class="private-tag"><span data-icon="lock"></span> BETA</span></div>
   <div class="page-heading"><div><h1>HARİTALAR</h1><p>Haritayı tanı. Planını kur. Aynı hedefe ilerle.</p></div><a class="button secondary" href="armor.html" target="_blank" rel="noopener">Zırh analizi ↗</a><button class="button secondary" data-action="help"><span data-icon="help"></span> Nasıl kullanılır?</button></div>
   <section class="workspace" aria-label="Harita ve taktik planlama">
     <div class="workspace-bar"><div class="workspace-label"><span data-icon="map"></span><span>TAKTİK MASASI</span><span class="live-dot"></span><span class="muted little" id="catalog-count">Haritalar yükleniyor…</span></div><div class="workspace-actions"><button class="button secondary compact" data-action="plans"><span data-icon="folder"></span><span>Planlarım</span></button><button class="button primary compact" data-action="save"><span data-icon="save"></span><span>Planı kaydet</span></button></div></div>
@@ -35,7 +35,7 @@
     </div>
     <div class="matchup" id="matchup"></div>
   </section>
-  <div class="page-bottom"><span><span data-icon="lock"></span> Bu önizleme yalnızca bu bilgisayarda çalışır.</span><span>Harita verisi: <a href="https://squadmaps.com/" target="_blank" rel="noopener">SquadMaps</a><span class="crumb-slash">/</span><button class="text-button" data-action="sources">Veri ve sürüm bilgisi</button></span></div>
+  <div class="page-bottom"><span><span data-icon="lock"></span> Planlar bu tarayıcıda saklanır; paylaşmak için Planım → Tam yedek indir.</span><span>Harita verisi: <a href="https://squadmaps.com/" target="_blank" rel="noopener">SquadMaps</a><span class="crumb-slash">/</span><button class="text-button" data-action="sources">Veri ve sürüm bilgisi</button></span></div>
 </main>
 <footer><img src="assets/brand/zz-logo-wide.png" alt="Zero Zone"><span>AYNI CEPHE. AYNI HEDEF.</span><small>© 2026 Zero Zone Community</small></footer>
 <dialog id="library-dialog" class="library-dialog" aria-labelledby="library-title"><div class="dialog-heading"><div><span class="eyebrow">OPERASYON ALANINI SEÇ</span><h2 id="library-title">HARİTA KÜTÜPHANESİ</h2></div><button class="icon-button" data-close aria-label="Harita kütüphanesini kapat"><span data-icon="close"></span></button></div><div class="library-filters"><div class="search-field"><span data-icon="search"></span><input id="map-search" type="search" placeholder="Harita veya katman ara…" aria-label="Harita veya katman ara"></div><select id="mode-filter" aria-label="Oyun modu"><option value="">Tüm oyun modları</option></select><select id="faction-filter" aria-label="Ordu"><option value="">Tüm ordular</option></select><button class="button secondary compact" data-action="favorites" aria-pressed="false"><span data-icon="star"></span> Favoriler</button></div><div class="library-meta"><span id="library-count"></span><button class="text-button" data-action="reset-filters">Filtreleri temizle</button></div><div id="map-grid" class="map-grid"></div></dialog>
