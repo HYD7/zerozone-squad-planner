@@ -535,7 +535,7 @@ export class TacticalMap {
       }
       if (item.tool === 'pin') {
         pinIndex++;
-        const svg=style.symbol==='pin'?`<svg class="zz-pin" viewBox="0 0 27 34" aria-hidden="true"><path d="M13.5 33S1 21 1 13.5a12.5 12.5 0 1 1 25 0C26 21 13.5 33 13.5 33Z" fill="${colour}" stroke="#101619" stroke-width="2"/><circle cx="13.5" cy="13" r="4" fill="#14242c"/></svg>`:squadSymbol(style.symbol,colour);
+        const svg=style.symbol==='pin'?`<svg class="zz-pin" viewBox="0 0 27 34" aria-hidden="true"><path d="M13.5 33S1 21 1 13.5a12.5 12.5 0 1 1 25 0C26 21 13.5 33 13.5 33Z" fill="${colour}" stroke="var(--zz-map-bg,#101619)" stroke-width="2"/><circle cx="13.5" cy="13" r="4" fill="var(--zz-surface-solid,#14242c)"/></svg>`:squadSymbol(style.symbol,colour);
         selectable(L.marker(latA, { icon: this._icon(svg), title:item.label||SYMBOLS[style.symbol] }));
         if (this.overlays.labels) this._label(a, escapeHTML(item.label || `İşaret ${pinIndex}`));
       } else if (item.tool === 'hab') {
@@ -552,7 +552,7 @@ export class TacticalMap {
         const latB = this._latLng(b);
         selectable(L.polyline([latA, latB], { color, weight: style.weight, opacity: 0.95, dashArray: appearance.dash||(item.tool === 'arrow'&&!style.dashed ? null : '7 5') }));
         if (item.tool === 'arrow') {
-          const svg = `<div class="zz-arrow-head"><svg width="24" height="24" viewBox="0 0 24 24" style="transform:rotate(${geometry.bearing}deg)"><path d="M12 1L23 23L12 17L1 23Z" fill="${color}" stroke="#21323a" stroke-width="1"/></svg></div>`;
+          const svg = `<div class="zz-arrow-head"><svg width="24" height="24" viewBox="0 0 24 24" style="transform:rotate(${geometry.bearing}deg)"><path d="M12 1L23 23L12 17L1 23Z" fill="${color}" stroke="var(--zz-map-surface,#21323a)" stroke-width="1"/></svg></div>`;
           L.marker(latB, { icon: this._icon(svg), interactive: false, keyboard: false }).addTo(this.annotationLayer);
         } else {
           L.circleMarker(latB, { radius: 5, color, weight: 2, fillColor: '#172129', fillOpacity: 1, interactive: false }).addTo(this.annotationLayer);

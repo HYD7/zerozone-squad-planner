@@ -183,7 +183,7 @@ const blocks = CSS.flatMap(flatten);
 const live = blocks.filter((b) => !b.frozen);
 const HEX = /#[0-9a-fA-F]{3,8}\b/g;
 const stripUrl = (v) => v.replace(/url\((?:"[^"]*"|'[^']*'|[^)]*)\)/gi, 'url()');
-const allowedHex = new Set(['#f5f5f5', '#c3c3c3', '#ffffff30']), allowedRgb = new Set();
+const allowedHex = new Set(['#f5f5f5', '#c3c3c3', '#ffffff30', '#000a']), allowedRgb = new Set();
 const addColors = (v) => {
   for (const m of v.match(HEX) ?? []) allowedHex.add(m.toLowerCase());
   for (const m of v.matchAll(/rgba?\([^)]*\)/gi)) allowedRgb.add(compact(m[0]));

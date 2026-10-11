@@ -60,6 +60,14 @@
   --zz-radius-xs:6px;
   --zz-surface-solid:var(--zs-overlay);
   --zz-sidebar-w:295px;
+  --zz-cb-fg:#fff;
+  --zz-cb-edge:#ddd;
+  --zz-cb-sky:#56b4e9;
+  --zz-cb-sky-bg:#124d6e;
+  --zz-cb-sky-text:#8bd5ff;
+  --zz-cb-orange:#e69f00;
+  --zz-cb-orange-bg:#594100;
+  --zz-cb-orange-text:#f5ca69;
   --bg:var(--zs-bg);
   --surface:var(--zs-surface-2);
   --raised:var(--zs-surface);
@@ -646,7 +654,7 @@ h3 {
   flex:1;
   min-height:0;
   isolation:isolate;
-  background:#161c1c
+  background:var(--zz-map-bg)
 }
 .map-heading {
   position:absolute;
@@ -659,23 +667,23 @@ h3 {
   align-items:center
 }
 .map-heading .heading-name {
-  background:#111719ef;
+  background:var(--zz-surface-solid);
   backdrop-filter:blur(8px);
   padding:9px 12px;
-  border-radius:6px;
-  border:1px solid #ffffff17;
-  box-shadow:0 2px 10px #0003;
-  font-size:10px;
+  border-radius:var(--zz-radius-xs);
+  border:1px solid var(--zs-line);
+  box-shadow:0 2px 10px color-mix(in srgb,var(--zs-bg) 20%,transparent);
+  font-size:var(--zs-fs-xs);
   font-weight:700
 }
 .map-heading .heading-mode {
-  background:#b5e8fae8;
-  color:#17242a;
-  font-size:9px;
+  background:color-mix(in srgb,var(--zs-accent) 91%,transparent);
+  color:var(--zs-on-accent);
+  font-size:var(--zs-fs-xs);
   font-weight:700;
   letter-spacing:.6px;
   padding:10px 10px;
-  border-radius:5px
+  border-radius:var(--zz-radius-xs)
 }
 .map-tools {
   display:flex;
@@ -686,10 +694,10 @@ h3 {
   top:72px;
   left:18px;
   padding:5px;
-  background:#101618f2;
-  border:1px solid #ffffff22;
-  border-radius:8px;
-  box-shadow:0 6px 20px #0004
+  background:var(--zz-surface-solid);
+  border:1px solid var(--zs-line-2);
+  border-radius:var(--zs-radius);
+  box-shadow:0 6px 20px color-mix(in srgb,var(--zs-bg) 27%,transparent)
 }
 .tool {
   background:transparent;
@@ -698,20 +706,20 @@ h3 {
   justify-content:center;
   width:33px;
   height:33px;
-  border-radius:5px;
-  color:#b5c2c8
+  border-radius:var(--zs-radius);
+  color:var(--zs-text-2)
 }
 .tool:hover {
-  background:#ffffff13;
+  background:var(--zs-line);
   color:white
 }
 .tool.active {
   background:var(--zs-accent);
-  color:#152027
+  color:var(--zs-on-accent)
 }
 .tool-separator {
   height:1px;
-  background:#ffffff17;
+  background:var(--zs-line);
   margin:3px 4px
 }
 .view-tools {
@@ -724,14 +732,17 @@ h3 {
   gap:7px
 }
 .view-tools>.tool,.zoom-tools {
-  border:1px solid #ffffff22;
+  border:1px solid var(--zs-line-2);
   background:var(--zz-surface-solid);
-  border-radius:6px;
-  box-shadow:0 3px 15px #0003
+  border-radius:var(--zs-radius);
+  box-shadow:0 3px 15px color-mix(in srgb,var(--zs-bg) 20%,transparent)
 }
 .zoom-tools .tool+ .tool {
-  border-top:1px solid #ffffff18;
-  border-radius:0 0 5px 5px
+  border-top:1px solid var(--zs-line);
+  border-radius:0 0 var(--zs-radius) var(--zs-radius)
+}
+.zoom-tools .tool:first-child {
+  border-radius:var(--zs-radius) var(--zs-radius) 0 0
 }
 .view-tools>.tool {
   width:35px;
@@ -746,10 +757,10 @@ h3 {
   gap:13px;
   background:var(--zz-surface-solid);
   padding:10px 12px;
-  border:1px solid #ffffff18;
-  border-radius:6px;
-  font-size:9px;
-  color:#becad0;
+  border:1px solid var(--zs-line);
+  border-radius:var(--zz-radius-xs);
+  font-size:var(--zs-fs-xs);
+  color:var(--zs-text-2);
   pointer-events:none
 }
 .map-legend>span {
@@ -764,27 +775,27 @@ h3 {
   border-radius:50%
 }
 .legend-dot.blue {
-  background:#8fcafb
+  background:var(--zz-team1)
 }
 .legend-dot.red {
-  background:#f19aa4
+  background:var(--zz-danger)
 }
 .legend-dot.white {
-  background:#d2eff8
+  background:color-mix(in srgb,var(--zs-accent) 60%,var(--zs-text))
 }
 .map-north {
   position:absolute;
   z-index:400;
   bottom:29px;
   right:22px;
-  color:#d5e6e9;
+  color:var(--zs-text);
   display:flex;
   flex-direction:column;
   align-items:center;
-  font-size:9px;
+  font-size:var(--zs-fs-xs);
   font-weight:700;
   pointer-events:none;
-  text-shadow:0 2px 4px #000
+  text-shadow:0 2px 4px var(--zs-shadow)
 }
 .map-north span {
   font-size:24px;
@@ -795,10 +806,10 @@ h3 {
   align-items:center;
   padding:10px 13px;
   gap:14px;
-  font-size:9px;
-  color:#96a5ac;
-  border-top:1px solid #ffffff12;
-  background:#131719;
+  font-size:var(--zs-fs-xs);
+  color:var(--zs-text-3);
+  border-top:1px solid var(--zs-line);
+  background:var(--zz-surface-solid);
   min-height:36px
 }
 .status-instruction {
@@ -812,17 +823,17 @@ h3 {
   align-items:center;
   gap:5px;
   white-space:nowrap;
-  color:#929e9b
+  color:var(--zs-text-3)
 }
 .local-indicator i {
   height:4px;
   width:4px;
-  background:#8dad9b;
+  background:var(--zz-ok);
   border-radius:50%
 }
 #grid-status {
   font-variant-numeric:tabular-nums;
-  color:#d7e8ef;
+  color:var(--zs-text);
   min-width:40px
 }
 .matchup {
@@ -939,11 +950,11 @@ footer small {
   top:16px;
   z-index:600;
   background:var(--zz-surface-solid);
-  border:1px solid #ffffff25;
+  border:1px solid var(--zs-line-2);
   padding:15px;
-  border-radius:8px;
+  border-radius:var(--zs-radius);
   min-width:222px;
-  box-shadow:0 10px 30px #0006
+  box-shadow:0 10px 30px color-mix(in srgb,var(--zs-bg) 40%,transparent)
 }
 .overlay-panel h3 {
   font-size:12px;
@@ -953,8 +964,8 @@ footer small {
   display:flex;
   align-items:center;
   gap:9px;
-  font-size:10px;
-  color:#a9bdc6;
+  font-size:var(--zs-fs-xs);
+  color:var(--zs-text-2);
   padding:6px 0;
   cursor:pointer
 }
@@ -964,19 +975,19 @@ footer small {
   bottom:63px;
   z-index:500;
   max-width:245px;
-  border:1px solid #ffffff26;
-  border-radius:8px;
+  border:1px solid var(--zs-line-2);
+  border-radius:var(--zs-radius);
   padding:15px;
   background:var(--zz-surface-solid);
-  box-shadow:0 6px 22px #0005
+  box-shadow:0 6px 22px color-mix(in srgb,var(--zs-bg) 33%,transparent)
 }
 .point-detail h3 {
   margin-right:22px;
   font-size:12px
 }
 .point-detail p {
-  font-size:10px;
-  color:#aabcc4;
+  font-size:var(--zs-fs-xs);
+  color:var(--zs-text-2);
   margin-top:8px;
   line-height:1.6
 }
@@ -991,7 +1002,7 @@ footer small {
 }
 .point-detail select {
   width:100%;
-  font-size:10px;
+  font-size:var(--zs-fs-xs);
   margin-top:10px;
   padding:6px
 }
@@ -1137,15 +1148,15 @@ footer small {
 }
 dialog {
   color:var(--zs-text);
-  background:#141718;
-  border:1px solid #ffffff24;
-  border-radius:14px;
-  box-shadow:0 30px 150px #000b;
+  background:var(--zs-overlay);
+  border:1px solid var(--zs-line-2);
+  border-radius:var(--zs-radius-lg);
+  box-shadow:0 30px 150px var(--zs-shadow);
   padding:0;
   max-height:90vh
 }
 dialog::backdrop {
-  background:#06090bd9;
+  background:color-mix(in srgb,var(--zs-bg) 70%,transparent);
   backdrop-filter:blur(7px)
 }
 .library-dialog {
@@ -1177,38 +1188,38 @@ dialog::backdrop {
   align-items:center;
   gap:10px;
   border:1px solid var(--zs-line-2);
-  border-radius:7px;
+  border-radius:var(--zz-radius-xs);
   padding:0 12px;
-  color:#82929b;
+  color:var(--zs-text-3);
   flex:1;
   min-width:150px;
-  background:#101213
+  background:var(--zs-bg)
 }
 .search-field input {
   background:none;
   border:0;
   padding-left:0;
   width:100%;
-  font-size:11px;
+  font-size:var(--zs-fs-xs);
   outline:none
 }
 .search-field:focus-within {
-  border-color:#b5e8fa80
+  border-color:color-mix(in srgb,var(--zs-accent) 50%,transparent)
 }
 .library-filters select {
-  font-size:11px;
+  font-size:var(--zs-fs-xs);
   max-width:190px
 }
 .library-filters button[aria-pressed=true] {
   color:var(--zs-accent);
-  border-color:#b5e8fa70
+  border-color:color-mix(in srgb,var(--zs-accent) 44%,transparent)
 }
 .library-meta {
   display:flex;
   justify-content:space-between;
   padding:18px 27px;
-  color:#84969e;
-  font-size:10px
+  color:var(--zs-text-3);
+  font-size:var(--zs-fs-xs)
 }
 .map-grid {
   padding:0 27px 27px;
@@ -1221,16 +1232,16 @@ dialog::backdrop {
 }
 .map-card {
   position:relative;
-  border:1px solid #ffffff16;
-  background:#1a2022;
-  border-radius:8px;
+  border:1px solid var(--zs-line);
+  background:var(--zs-surface-2);
+  border-radius:var(--zs-radius);
   overflow:hidden
 }
 .map-card:hover {
-  border-color:#b5e8fa80
+  border-color:color-mix(in srgb,var(--zs-accent) 50%,transparent)
 }
 .map-card.chosen {
-  border-color:#b5e8fa80
+  border-color:color-mix(in srgb,var(--zs-accent) 50%,transparent)
 }
 .map-card-button {
   display:block;
@@ -1258,8 +1269,8 @@ dialog::backdrop {
   font-weight:700
 }
 .map-card p {
-  font-size:9px;
-  color:#8f9d9f;
+  font-size:var(--zs-fs-xs);
+  color:var(--zs-text-3);
   display:flex;
   justify-content:space-between;
   gap:6px;
@@ -1269,11 +1280,11 @@ dialog::backdrop {
   position:absolute;
   right:8px;
   top:8px;
-  background:#0b1215d9;
+  background:color-mix(in srgb,var(--zs-bg) 85%,transparent);
   width:26px;
   height:26px;
-  color:#b6c4c9;
-  border-radius:5px;
+  color:var(--zs-text-2);
+  border-radius:var(--zz-radius-xs);
   display:grid;
   place-items:center
 }
@@ -1282,7 +1293,7 @@ dialog::backdrop {
   width:13px
 }
 .favorite.on {
-  color:#f1d391
+  color:var(--zz-warn)
 }
 .favorite.on svg {
   fill:currentColor
@@ -1295,14 +1306,14 @@ dialog::backdrop {
 }
 #info-body {
   padding:23px 27px;
-  color:#a8b7bd;
+  color:var(--zs-text-2);
   font-size:12px;
   line-height:1.8;
   overflow:auto;
   max-height:68vh
 }
 #info-body h3 {
-  color:#f0f3ee;
+  color:var(--zs-text);
   margin:18px 0 7px
 }
 #info-body h3:first-child {
@@ -1324,21 +1335,21 @@ dialog::backdrop {
   margin-top:3px
 }
 .help-row strong {
-  color:#e3edf0
+  color:var(--zs-text)
 }
 .help-row p {
-  font-size:11px;
+  font-size:var(--zs-fs-xs);
   margin:3px 0
 }
 .shortcut {
   display:inline-block;
-  font-size:10px;
+  font-size:var(--zs-fs-xs);
   font-family:monospace;
-  background:#ffffff10;
-  border:1px solid #ffffff20;
+  background:var(--zs-line);
+  border:1px solid var(--zs-line-2);
   padding:1px 5px;
-  border-radius:3px;
-  color:#d4e7ef
+  border-radius:0;
+  color:var(--zs-text)
 }
 .saved-plan {
   display:flex;
@@ -1943,8 +1954,8 @@ dialog::backdrop {
   margin-top:5px;
   color:var(--zs-accent)
 }
-.over-budget,.over-budget b {
-  color:#f19aa4!important
+.over-budget,.over-budget b,.budget-grid .over-budget b,.side-note.over-budget,.terrain-status.over-budget {
+  color:var(--zz-danger)
 }
 .build-row {
   display:flex;
@@ -2074,15 +2085,15 @@ dialog::backdrop {
   bottom:48px;
   z-index:500;
   background:var(--zz-surface-solid);
-  border:1px solid #ffffff20;
-  border-radius:6px;
+  border:1px solid var(--zs-line-2);
+  border-radius:var(--zz-radius-xs);
   padding:9px 11px;
   pointer-events:none
 }
 .prediction>span {
-  font-size:9px;
+  font-size:var(--zs-fs-xs);
   letter-spacing:1px;
-  color:#a7b3ba
+  color:var(--zs-text-2)
 }
 .prediction>div {
   display:flex;
@@ -2090,8 +2101,8 @@ dialog::backdrop {
   margin-top:6px
 }
 .lane-chip {
-  font-size:10px;
-  color:#b5e8fa
+  font-size:var(--zs-fs-xs);
+  color:var(--zs-accent)
 }
 .lane-chip.excluded {
   opacity:.35;
@@ -2278,25 +2289,25 @@ dialog::backdrop {
   gap:6px;
   padding:9px;
   background:var(--zz-surface-solid);
-  border:1px solid #f4253870;
-  border-radius:8px;
+  border:1px solid color-mix(in srgb,var(--zz-red-zone) 44%,transparent);
+  border-radius:var(--zs-radius);
   max-width:calc(100% - 110px);
   flex-wrap:wrap;
-  box-shadow:0 4px 18px #0009
+  box-shadow:0 4px 18px color-mix(in srgb,var(--zs-bg) 60%,transparent)
 }
 .region-drawbar[hidden] {
   display:none
 }
 .region-drawbar span {
-  color:#f1a8ae;
-  font-size:10px;
+  color:var(--zz-danger);
+  font-size:var(--zs-fs-xs);
   white-space:nowrap
 }
 .region-drawbar button {
-  border:1px solid #ffffff30;
-  background:#26353b;
-  color:#fff;
-  border-radius:4px;
+  border:1px solid var(--zs-line-3);
+  background:color-mix(in srgb,var(--zs-text) 10%,var(--zs-bg));
+  color:var(--zz-cb-fg);
+  border-radius:var(--zz-radius-xs);
   padding:7px;
   font:600 10px Montserrat,sans-serif;
   cursor:pointer;
@@ -2310,19 +2321,19 @@ dialog::backdrop {
   display:block;
   width:13px;
   height:13px;
-  border:2px solid #fff;
-  background:#f42538;
+  border:2px solid var(--zz-cb-fg);
+  background:var(--zz-red-zone);
   transform:translate(-50%,-50%);
-  border-radius:3px;
-  box-shadow:0 2px 5px #0008
+  border-radius:0;
+  box-shadow:0 2px 5px color-mix(in srgb,var(--zs-bg) 53%,transparent)
 }
 .region-midpoint {
   display:grid;
   place-items:center;
   width:13px;
   height:13px;
-  border:1px solid #f8a3ac;
-  background:#542a30;
+  border:1px solid var(--zz-danger);
+  background:color-mix(in srgb,var(--zz-danger) 35%,var(--zs-bg));
   color:white;
   transform:translate(-50%,-50%);
   border-radius:50%;
@@ -2419,35 +2430,35 @@ dialog::backdrop {
   font-size:var(--label-size,10px)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-selected {
-  background:#124d6e;
-  border-color:#56b4e9
+  background:var(--zz-cb-sky-bg);
+  border-color:var(--zz-cb-sky)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-next {
-  background:#594100;
-  border-color:#e69f00;
-  box-shadow:0 0 0 4px #e69f0033
+  background:var(--zz-cb-orange-bg);
+  border-color:var(--zz-cb-orange);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--zz-cb-orange) 20%,transparent)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.team-red {
-  background:#594100;
-  border-color:#e69f00
+  background:var(--zz-cb-orange-bg);
+  border-color:var(--zz-cb-orange)
 }
 .workspace.colorblind .capture-path button {
-  color:#8bd5ff;
-  border-color:#56b4e980;
-  background:#56b4e918
+  color:var(--zz-cb-sky-text);
+  border-color:color-mix(in srgb,var(--zz-cb-sky) 50%,transparent);
+  background:color-mix(in srgb,var(--zz-cb-sky) 9%,transparent)
 }
 .workspace.colorblind .capture-next button,.workspace.colorblind .capture-next b {
-  color:#f5ca69;
-  border-color:#e69f0080
+  color:var(--zz-cb-orange-text);
+  border-color:color-mix(in srgb,var(--zz-cb-orange) 50%,transparent)
 }
 .workspace.colorblind .team-emblem.red {
-  color:#e69f00
+  color:var(--zz-cb-orange)
 }
 .workspace.colorblind .prediction .lane-chip {
-  color:#f0dfb0
+  color:var(--zz-cb-orange-text)
 }
 .workspace.colorblind .map-legend {
-  color:#fff
+  color:var(--zz-cb-fg)
 }
 .terrain-offsets {
   display:grid;
@@ -2478,14 +2489,14 @@ dialog::backdrop {
   max-width:96vw;
   max-height:94vh;
   overflow:auto;
-  background:#141c21;
-  color:#e5edf1;
-  border:1px solid #b5e8fa40;
-  border-radius:12px;
+  background:var(--zs-overlay);
+  color:var(--zs-text);
+  border:1px solid color-mix(in srgb,var(--zs-accent) 25%,transparent);
+  border-radius:var(--zs-radius-lg);
   padding:20px
 }
 .terrain-dialog::backdrop {
-  background:#05090dde;
+  background:color-mix(in srgb,var(--zs-bg) 70%,transparent);
   backdrop-filter:blur(5px)
 }
 .terrain-dialog-head {
@@ -2504,10 +2515,10 @@ dialog::backdrop {
   width:100%;
   height:min(62vh,640px);
   touch-action:none;
-  border-radius:8px
+  border-radius:var(--zs-radius)
 }
 .terrain-dialog canvas:focus-visible {
-  outline:2px solid #b5e8fa
+  outline:2px solid var(--zs-accent)
 }
 .terrain-controls {
   display:flex;
@@ -2515,7 +2526,7 @@ dialog::backdrop {
   align-items:center;
   gap:18px;
   margin-top:15px;
-  font-size:11px
+  font-size:var(--zs-fs-xs)
 }
 .terrain-controls label {
   display:flex;
@@ -2630,10 +2641,10 @@ dialog::backdrop {
   margin:10px 0
 }
 .terrain-legend {
-  color:#b5e8fa
+  color:var(--zs-accent)
 }
 .terrain-legend span {
-  color:#f4c27b
+  color:var(--zz-warn)
 }
 @media(max-width:600px) {
   .terrain-dialog canvas {
@@ -2646,7 +2657,7 @@ dialog::backdrop {
   gap:10px;
   flex-wrap:wrap;
   margin-top:14px;
-  font-size:11px
+  font-size:var(--zs-fs-xs)
 }
 .terrain-playback input {
   flex:1;
@@ -2654,7 +2665,7 @@ dialog::backdrop {
 }
 .terrain-playback output {
   min-width:65px;
-  color:#f4c27b
+  color:var(--zz-warn)
 }
 .terrain-toggles {
   display:grid;
@@ -2678,14 +2689,14 @@ dialog::backdrop {
   position:sticky;
   top:-20px;
   z-index:2;
-  background:#141c21;
+  background:var(--zs-overlay);
   padding:8px 0
 }
 .terrain-controls {
   gap:10px
 }
 .terrain-controls>span:not(.terrain-legend) {
-  color:#9baeb8
+  color:var(--zs-text-2)
 }
 @media(max-width:600px) {
   .terrain-dialog canvas {
@@ -2708,12 +2719,12 @@ dialog::backdrop {
 .workspace .zz-tactical-map.colorblind .zz-objective-disc {
   background:var(--zz-map-surface);
   color:white;
-  border-color:#eee
+  border-color:var(--zz-cb-edge)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-selected {
   background:var(--zz-map-surface);
   border-color:var(--cb-selected);
-  border-radius:3px;
+  border-radius:0;
   box-shadow:0 0 0 2px var(--zz-map-surface)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-next {
@@ -2726,11 +2737,11 @@ dialog::backdrop {
   background:var(--zz-map-surface);
   border-color:var(--cb-team1);
   transform:none;
-  border-radius:2px
+  border-radius:0
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.is-main span {
   transform:none;
-  font-size:11px
+  font-size:var(--zs-fs-xs)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.is-main.team-red {
   background:var(--zz-map-surface);
@@ -2741,12 +2752,12 @@ dialog::backdrop {
   transform:rotate(-45deg)
 }
 .zz-cb-state {
-  font-size:9px;
+  font-size:var(--zs-fs-xs);
   font-weight:800;
   color:white;
-  background:#10191ef5;
+  background:var(--zz-surface-solid);
   padding:2px 5px;
-  border-radius:3px;
+  border-radius:0;
   white-space:nowrap
 }
 .workspace.colorblind .capture-path button {
@@ -2770,33 +2781,33 @@ dialog::backdrop {
   background:var(--zz-map-surface)
 }
 .workspace.colorblind .prediction .lane-chip {
-  color:#fff;
+  color:var(--zz-cb-fg);
   background:var(--zz-map-surface);
-  border:1px solid #ddd
+  border:1px solid var(--zz-cb-edge)
 }
 .workspace.colorblind .zz-capture-chance {
-  color:#fff;
-  border-color:#ddd
+  color:var(--zz-cb-fg);
+  border-color:var(--zz-cb-edge)
 }
 .workspace.colorblind .zz-mortar {
   color:var(--cb-flight);
   border-color:var(--cb-flight);
   background:var(--zz-map-surface)
 }
-.workspace.colorblind .over-budget,.workspace.colorblind .danger {
-  color:var(--cb-team2)!important;
+.workspace.colorblind .over-budget,.workspace.colorblind .over-budget b,.workspace.colorblind .danger {
+  color:var(--cb-team2);
   text-decoration:underline dotted;
   text-underline-offset:3px
 }
 .zz-grad-distance {
   display:block;
   width:max-content;
-  background:#10191eee;
+  background:var(--zz-surface-solid);
   color:white;
-  border:1px solid #ddd;
-  font-size:10px;
+  border:1px solid var(--zz-cb-edge);
+  font-size:var(--zs-fs-xs);
   padding:3px 5px;
-  border-radius:3px
+  border-radius:0
 }
 #grad-target .button {
   margin-top:10px;
@@ -2831,7 +2842,7 @@ dialog::backdrop {
 }
 #map-colorblind {
   width:100%;
-  font-size:10px
+  font-size:var(--zs-fs-xs)
 }
 .overlay-panel {
   max-width:min(310px,calc(100vw - 65px));
@@ -2902,11 +2913,11 @@ dialog::backdrop {
   align-items:center;
   gap:9px;
   background:var(--zz-surface-solid);
-  border:1px solid #c4eafa44;
-  border-radius:6px;
+  border:1px solid color-mix(in srgb,var(--zs-accent) 27%,transparent);
+  border-radius:var(--zz-radius-xs);
   padding:6px 9px;
   pointer-events:auto;
-  font-size:11px
+  font-size:var(--zs-fs-xs)
 }
 .pinned-timer>span {
   overflow:hidden;
@@ -2952,7 +2963,7 @@ body.colorblind {
   --zs-line-2:#ffffff65
 }
 body.colorblind :is(input,select,textarea) {
-  border-color:#919191
+  border-color:var(--zs-text-3)
 }
 body.colorblind :is(input,select,textarea):focus {
   outline:2px solid var(--cb-team1);
@@ -2961,7 +2972,7 @@ body.colorblind :is(input,select,textarea):focus {
 body.colorblind :is(.button.primary,.mode-pill.active,.drawing-button.active,.tool-button.active) {
   background:var(--cb-team1);
   color:var(--zz-map-surface);
-  border:2px solid #fff
+  border:2px solid var(--zz-cb-fg)
 }
 body.colorblind :is(.danger,.over-budget,.terrain-status.over-budget) {
   color:var(--cb-team2);
@@ -2984,37 +2995,37 @@ body.colorblind :is(.terrain-dialog canvas,.flight-minimap image,.map-card img) 
   filter:var(--map-image-filter)
 }
 body.colorblind :is(.colour-swatches button) {
-  color:#111;
+  color:var(--zs-on-accent);
   font-weight:900;
-  border:2px solid #eee
+  border:2px solid var(--zz-cb-edge)
 }
 body.colorblind .colour-swatches button[aria-pressed=true] {
-  outline:3px solid #fff;
+  outline:3px solid var(--zz-cb-fg);
   outline-offset:3px
 }
 .zz-draw-code {
   display:inline-block;
   padding:1px 4px;
-  background:#111;
-  color:#fff;
-  border:1px solid #fff;
+  background:var(--zs-on-accent);
+  color:var(--zz-cb-fg);
+  border:1px solid var(--zz-cb-fg);
   font-weight:800
 }
 .pinned-timer small {
   display:block;
   color:var(--zs-text-2);
-  font-size:9px;
+  font-size:var(--zs-fs-xs);
   max-width:190px;
   overflow:hidden;
   text-overflow:ellipsis
 }
 body.colorblind .terrain-profile text {
-  fill:#fff
+  fill:var(--zz-cb-fg)
 }
 body.colorblind dialog {
   --zs-accent:var(--cb-team1);
   color:var(--zs-text);
-  border-color:#aaa
+  border-color:var(--zs-text-2)
 }
 body.colorblind :is(.map-card,.layer-card,.vehicle,.timer-row,.build-row) {
   border-color:var(--zs-line-2)
@@ -3026,7 +3037,7 @@ body.colorblind input[type=range] {
   accent-color:var(--cb-team1)
 }
 body.colorblind .danger {
-  color:var(--cb-team2)!important
+  color:var(--cb-team2)
 }
 body.colorblind .compare-teams h3 {
   color:var(--cb-team1)
@@ -3037,11 +3048,11 @@ body.colorblind .compare-teams>section+section h3 {
 body.colorblind .region-row.selected {
   border-color:var(--cb-team2);
   border-style:dashed;
-  background:#222
+  background:color-mix(in srgb,var(--zs-text) 12%,var(--zs-bg))
 }
 body.colorblind .layer-card.selected {
   border-color:var(--cb-team1);
-  background:#212529
+  background:color-mix(in srgb,var(--zs-text) 10%,var(--zs-bg))
 }
 body.colorblind :is(.selected-map,.map-thumb) {
   filter:var(--map-image-filter)
@@ -3054,15 +3065,15 @@ body.colorblind :is(.vehicle-meta,.team-unit-name,.team-strip small,.terrain-con
   left:14px;
   top:-27px;
   line-height:16px;
-  font-size:10px;
-  border-radius:2px
+  font-size:var(--zs-fs-xs);
+  border-radius:0
 }
 body.colorblind :is(.over-budget,.over-budget b) {
-  color:var(--cb-team2)!important
+  color:var(--cb-team2)
 }
 body.colorblind :is(.map-change,.side-note.accent-note,.budget-grid>div,.terrain-readout,.terrain-profile,.region-copy-preview) {
   border-color:var(--zs-line-2);
-  background:#151c20
+  background:var(--zz-surface-solid)
 }
 body.colorblind :is(.range-label output,.stepper button,.region-help summary,.timer-row output) {
   color:var(--cb-team1)
@@ -3142,9 +3153,9 @@ body.colorblind .terrain-dialog canvas:focus-visible {
   width:34px;
   height:34px;
   border:2px solid var(--symbol-color);
-  border-radius:7px;
-  background:#14242deb;
-  box-shadow:0 2px 7px #0009;
+  border-radius:var(--zz-radius-xs);
+  background:var(--zz-surface-solid);
+  box-shadow:0 2px 7px color-mix(in srgb,var(--zs-bg) 60%,transparent);
   transform:translate(-50%,-50%)
 }
 .zz-squad-symbol img {
