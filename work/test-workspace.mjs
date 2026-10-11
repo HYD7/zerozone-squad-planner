@@ -29,6 +29,6 @@ assert.deepEqual(roundtrip.plan.capture,bundle.plan.capture);assert.equal(roundt
 assert.throws(()=>cleanBundle({...bundle,plan:{...bundle.plan,map:'Wrong'}},catalog));
 assert.throws(()=>cleanBundle({...bundle,regions:{regions:[{id:'bad',points:[]}]}},catalog));
 assert.throws(()=>cleanSets([snapshot,snapshot]));assert.throws(()=>cleanSets(Array.from({length:21},()=>snapshot)));
-assert.deepEqual(cleanDisplay({markerSize:1000,labelSize:-5,colorBlind:'true'}),{markerSize:44,labelSize:9,colorBlind:false,colorMode:"none",colorIntensity:70});
+assert.deepEqual(cleanDisplay({markerSize:1000,labelSize:-5,colorBlind:'true'}),{markerSize:44,labelSize:11,colorBlind:false,colorMode:"none",colorIntensity:70});
 assert.equal(copyRegions(base,{regions:[]},'replace',()=> 'test').regions[0].id,'copy-test');
 console.log('PASS: combined-backup roundtrip and validation, set snapshots, preview/apply/undo, append/replace and source isolation, stale/cross-map rejection, display bounds.');

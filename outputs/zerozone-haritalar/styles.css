@@ -1,3 +1,5 @@
+/* Dil kuralı: sayfa başlığı ve çalışma alanı üst düğmeleri (.page-heading, .workspace-actions) BÜYÜK HARF;
+   yan panel ve diyalog düğmeleri cümle düzeninde kalır. */
 :root {
   --zs-bg:#111112;
   --zs-surface:rgba(13,14,15,.66);
@@ -87,6 +89,20 @@
   color-scheme:dark;
   --zz-shadow:#000a;
   font-family:var(--zs-font);
+    --zz-shadow-sm:0 2px 8px color-mix(in srgb,var(--zz-shadow) 50%,transparent);
+  --zz-shadow-md:0 6px 20px color-mix(in srgb,var(--zz-shadow) 55%,transparent);
+  --zz-shadow-lg:0 12px 40px color-mix(in srgb,var(--zz-shadow) 60%,transparent);
+  --zz-blur:12px;
+  --zz-z-north:400;
+  --zz-z-timers:450;
+  --zz-z-map:500;
+  --zz-z-panel:600;
+  --zz-z-drawbar:700;
+  --zz-z-bar:900;
+  --zz-z-skip:1000;
+  --zz-z-expanded:1100;
+  --zz-z-toast:2000;
+  accent-color:var(--zs-accent);
   font-synthesis:none
 }
 * {
@@ -124,7 +140,7 @@ a {
 }
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
   outline:2px solid var(--zs-accent);
-  outline-offset:3px
+  outline-offset:2px
 }
 button {
   border:0
@@ -158,8 +174,7 @@ input::placeholder,textarea::placeholder {
   color:var(--zs-text-3)
 }
 input:focus,select:focus,textarea:focus {
-  border-color:var(--zs-accent);
-  box-shadow:0 0 0 3px var(--zs-accent-glow)
+  border-color:var(--zs-accent)
 }
 input[type=checkbox] {
   accent-color:var(--zs-accent);
@@ -201,7 +216,7 @@ h3 {
   position:fixed;
   left:-9999px;
   top:0;
-  z-index:1000
+  z-index:var(--zz-z-skip)
 }
 .skip-link:focus {
   left:20px;
@@ -211,7 +226,7 @@ h3 {
 }
 .zs-topbar {
   position:fixed;
-  z-index:900;
+  z-index:var(--zz-z-bar);
   top:var(--zs-bar-gap);
   left:var(--zs-bar-gap);
   right:var(--zs-bar-gap);
@@ -280,7 +295,7 @@ h3 {
   display:none
 }
 .page {
-  max-width:1600px;
+  max-width:1560px;
   margin:0 auto;
   padding:103px 40px 25px
 }
@@ -324,9 +339,15 @@ h3 {
 }
 .page-heading p {
   margin-top:9px;
-  font-size:var(--zs-fs-sm);
+  font-size:var(--zs-fs-lg);
   color:var(--zs-text-2);
-  line-height:var(--zs-lh-sm)
+  line-height:var(--zs-lh-lg)
+}
+.page-heading-actions {
+  display:flex;
+  gap:var(--zs-sp-2);
+  margin-left:auto;
+  align-items:center
 }
 .button {
   display:inline-flex;
@@ -346,8 +367,11 @@ h3 {
   background:var(--zs-accent);
   color:var(--zs-on-accent)
 }
+.button:active {
+  transform:scale(.97)
+}
 .button.primary:hover {
-  background:color-mix(in srgb,var(--zs-accent) 82%,white)
+  filter:brightness(.92)
 }
 .login:hover {
   filter:brightness(.92)
@@ -358,13 +382,20 @@ h3 {
   color:var(--zs-text)
 }
 .button.secondary:hover {
-  background:var(--zs-accent-soft);
+  background:var(--zs-line);
   border-color:var(--zs-line-3);
-  color:var(--zs-accent)
+  color:var(--zs-text)
 }
 .button.compact {
   padding:6px 12px;
   font-size:var(--zs-fs-sm)
+}
+.page-heading .button {
+  padding:6px 12px
+}
+.page-heading .button,.workspace-actions .button {
+  text-transform:uppercase;
+  letter-spacing:.2px
 }
 .button.full {
   width:100%
@@ -398,7 +429,7 @@ h3 {
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius-lg);
   background:var(--zs-surface-2);
-  box-shadow:0 12px 40px color-mix(in srgb,var(--zz-shadow) 25%,transparent)
+  box-shadow:var(--zz-shadow-lg)
 }
 .workspace-bar {
   padding:13px 18px;
@@ -448,7 +479,7 @@ h3 {
   background:var(--zs-surface-2)
 }
 .map-choice {
-  padding:16px;
+  padding:var(--zs-sp-4);
   border-bottom:1px solid var(--zs-line)
 }
 .selected-map {
@@ -472,15 +503,15 @@ h3 {
 }
 .selected-map-title {
   position:absolute;
-  bottom:11px;
-  left:13px;
+  bottom:var(--zs-sp-3);
+  left:var(--zs-sp-3);
   z-index:1
 }
 .selected-map-title h2 {
   font-size:var(--zs-fs-lg);
   font-weight:700;
   letter-spacing:-.2px;
-  line-height:1.3
+  line-height:var(--zs-lh-base)
 }
 .selected-map-title span {
   font-size:var(--zs-fs-xs);
@@ -529,27 +560,32 @@ h3 {
   border-bottom:2px solid transparent;
   line-height:var(--zs-lh-xs)
 }
+.side-tabs button:hover,.mode-pill:hover {
+  color:var(--zs-text)
+}
 .side-tabs button[aria-selected=true] {
   color:var(--zs-accent);
   border-bottom-color:var(--zs-accent)
 }
 #plan-count {
   font-size:var(--zs-fs-xs);
-  background:color-mix(in srgb,var(--zs-text) 4%,transparent);
-  border-radius:var(--zz-radius-xs);
-  padding:2px 4px;
-  position:absolute;
-  top:2px;
-  right:-8px;
-  line-height:var(--zs-lh-xs)
+  background:var(--zs-line-2);
+  border-radius:var(--zs-radius-pill);
+  padding:0 6px;
+  position:static;
+  line-height:var(--zs-lh-xs);
+  margin-left:4px;
+  color:var(--zs-text-2)
 }
 .side-content {
-  padding:15px;
+  padding:var(--zs-sp-4);
   overflow-y:auto;
   flex:1;
-  scrollbar-width:thin;
-  scrollbar-color:var(--zs-line-3) transparent;
   min-height:0
+}
+:is(.side-content,.map-grid,.overlay-panel,#info-body,.terrain-dialog) {
+  scrollbar-width:thin;
+  scrollbar-color:var(--zs-line-3) transparent
 }
 .mode-pills {
   display:flex;
@@ -565,9 +601,12 @@ h3 {
   padding:5px 7px;
   font-size:var(--zs-fs-xs);
   font-weight:600;
-  line-height:var(--zs-lh-xs)
+  line-height:var(--zs-lh-xs);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
 }
-.mode-pill.active {
+.mode-pill.active,.team-tabs .button.primary {
   color:var(--zs-accent);
   border-color:color-mix(in srgb,var(--zs-accent) 27%,transparent);
   background:color-mix(in srgb,var(--zs-accent) 5%,transparent)
@@ -590,15 +629,15 @@ h3 {
   text-align:left;
   border:1px solid var(--zs-line);
   border-radius:var(--zs-radius);
-  padding:12px;
-  margin-bottom:7px;
+  padding:var(--zs-sp-3);
+  margin-bottom:var(--zs-sp-2);
   background:var(--zs-surface);
   color:var(--zs-text-2);
   position:relative
 }
 .layer-card:hover {
   border-color:var(--zs-line-3);
-  background:var(--zs-accent-glow)
+  background:var(--zs-accent-soft)
 }
 .layer-card.selected {
   border-color:color-mix(in srgb,var(--zs-accent) 40%,transparent);
@@ -630,7 +669,7 @@ h3 {
 .layer-sub {
   display:flex;
   align-items:center;
-  gap:7px;
+  gap:var(--zs-sp-2);
   margin-top:9px;
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-3);
@@ -655,7 +694,7 @@ h3 {
 }
 .side-note {
   font-size:var(--zs-fs-xs);
-  line-height:1.7;
+  line-height:var(--zs-lh-sm);
   color:var(--zs-text-3);
   margin-top:14px
 }
@@ -667,7 +706,7 @@ h3 {
 }
 .side-select {
   width:100%;
-  margin-top:7px;
+  margin-top:var(--zs-sp-2);
   font-size:var(--zs-fs-sm)
 }
 .map-column {
@@ -685,7 +724,7 @@ h3 {
 }
 .map-heading {
   position:absolute;
-  z-index:500;
+  z-index:var(--zz-z-map);
   top:16px;
   left:18px;
   pointer-events:none;
@@ -695,11 +734,11 @@ h3 {
 }
 .map-heading .heading-name {
   background:var(--zz-surface-solid);
-  backdrop-filter:blur(8px);
+  backdrop-filter:blur(var(--zz-blur));
   padding:9px 12px;
   border-radius:var(--zz-radius-xs);
   border:1px solid var(--zs-line);
-  box-shadow:0 2px 10px color-mix(in srgb,var(--zs-bg) 20%,transparent);
+  box-shadow:var(--zz-shadow-sm);
   font-size:var(--zs-fs-xs);
   font-weight:700
 }
@@ -717,14 +756,14 @@ h3 {
   flex-direction:column;
   gap:3px;
   position:absolute;
-  z-index:500;
+  z-index:var(--zz-z-map);
   top:72px;
   left:18px;
   padding:5px;
   background:var(--zz-surface-solid);
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius);
-  box-shadow:0 6px 20px color-mix(in srgb,var(--zs-bg) 27%,transparent)
+  box-shadow:var(--zz-shadow-md)
 }
 .tool {
   background:transparent;
@@ -738,7 +777,7 @@ h3 {
 }
 .tool:hover {
   background:var(--zs-line);
-  color:white
+  color:var(--zs-text)
 }
 .tool.active {
   background:var(--zs-accent);
@@ -751,18 +790,18 @@ h3 {
 }
 .view-tools {
   position:absolute;
-  z-index:500;
+  z-index:var(--zz-z-map);
   right:16px;
   top:16px;
   display:flex;
   flex-direction:column;
-  gap:7px
+  gap:var(--zs-sp-2)
 }
 .view-tools>.tool,.zoom-tools {
   border:1px solid var(--zs-line-2);
   background:var(--zz-surface-solid);
   border-radius:var(--zs-radius);
-  box-shadow:0 3px 15px color-mix(in srgb,var(--zs-bg) 20%,transparent)
+  box-shadow:var(--zz-shadow-sm)
 }
 .zoom-tools .tool+ .tool {
   border-top:1px solid var(--zs-line);
@@ -779,7 +818,7 @@ h3 {
   position:absolute;
   bottom:16px;
   left:18px;
-  z-index:500;
+  z-index:var(--zz-z-map);
   display:flex;
   gap:13px;
   background:var(--zz-surface-solid);
@@ -812,7 +851,7 @@ h3 {
 }
 .map-north {
   position:absolute;
-  z-index:400;
+  z-index:var(--zz-z-north);
   bottom:29px;
   right:22px;
   color:var(--zs-text);
@@ -825,8 +864,8 @@ h3 {
   text-shadow:0 2px 4px var(--zz-shadow)
 }
 .map-north span {
-  font-size:24px;
-  line-height:1.2
+  font-size:var(--zs-fs-h2);
+  line-height:var(--zs-lh-base)
 }
 .map-status {
   display:flex;
@@ -953,10 +992,11 @@ footer {
   align-items:center;
   gap:22px;
   border-top:1px solid var(--zs-line);
-  padding:22px 40px;
-  margin-top:10px;
+  padding:var(--zs-sp-5) var(--zs-sp-7);
   font-size:var(--zs-fs-xs);
-  color:var(--zs-text-3)
+  color:var(--zs-text-3);
+  max-width:1560px;
+  margin:var(--zs-sp-6) auto 0
 }
 footer img {
   width:85px;
@@ -975,17 +1015,20 @@ footer small {
   position:absolute;
   right:60px;
   top:16px;
-  z-index:600;
+  z-index:var(--zz-z-panel);
   background:var(--zz-surface-solid);
   border:1px solid var(--zs-line-2);
-  padding:15px;
+  padding:var(--zs-sp-4);
   border-radius:var(--zs-radius);
   min-width:222px;
-  box-shadow:0 10px 30px color-mix(in srgb,var(--zs-bg) 40%,transparent)
+  box-shadow:var(--zz-shadow-md);
+  max-width:min(310px,calc(100vw - 65px));
+  max-height:calc(100% - 35px);
+  overflow:auto
 }
 .overlay-panel h3 {
-  font-size:12px;
-  margin-bottom:12px
+  font-size:var(--zs-fs-xs);
+  margin-bottom:14px
 }
 .overlay-panel label {
   display:flex;
@@ -999,33 +1042,37 @@ footer small {
 .point-detail {
   position:absolute;
   right:16px;
-  bottom:63px;
-  z-index:500;
+  bottom:var(--zs-sp-9);
+  z-index:var(--zz-z-map);
   max-width:245px;
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius);
-  padding:15px;
+  padding:var(--zs-sp-4);
   background:var(--zz-surface-solid);
-  box-shadow:0 6px 22px color-mix(in srgb,var(--zs-bg) 33%,transparent)
+  box-shadow:var(--zz-shadow-md)
 }
 .point-detail h3 {
-  margin-right:22px;
-  font-size:12px
+  margin-right:40px;
+  font-size:var(--zs-fs-xs);
+  margin-top:var(--zs-sp-2)
 }
 .point-detail p {
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-2);
   margin-top:8px;
-  line-height:1.6
+  line-height:var(--zs-lh-sm)
 }
-.point-detail button {
+.point-detail .eyebrow {
+  display:block;
+  margin-right:40px
+}
+.point-detail .icon-button {
   position:absolute;
-  top:8px;
-  right:8px;
-  width:24px;
-  height:24px;
-  font-size:18px;
-  background:transparent
+  top:var(--zs-sp-2);
+  right:var(--zs-sp-2)
+}
+.point-detail .button {
+  margin-top:var(--zs-sp-3)
 }
 .point-detail select {
   width:100%;
@@ -1036,21 +1083,10 @@ footer small {
 .team-tabs {
   display:flex;
   gap:6px;
-  margin-bottom:15px
+  margin-bottom:var(--zs-sp-4)
 }
 .team-tabs button {
   flex:1
-}
-.team-card-title {
-  font-size:var(--zs-fs-sm);
-  font-weight:700;
-  margin-bottom:5px
-}
-.team-unit-name {
-  color:var(--zs-text-3);
-  font-size:var(--zs-fs-xs);
-  line-height:1.5;
-  margin-bottom:16px
 }
 .form-label {
   display:block;
@@ -1058,17 +1094,27 @@ footer small {
   font-weight:600;
   color:var(--zs-text-3);
   letter-spacing:.5px;
-  margin:13px 0 6px;
+  margin:var(--zs-sp-3) 0 6px;
   line-height:var(--zs-lh-xs)
+}
+.form-label-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--zs-sp-2)
+}
+.form-label-row .zz-flag {
+  width:30px;
+  height:20px
 }
 .vehicle {
   border-bottom:1px solid var(--zs-line);
-  padding:11px 0
+  padding:var(--zs-sp-3) 0
 }
 .vehicle-line {
   display:flex;
   justify-content:space-between;
-  gap:7px;
+  gap:var(--zs-sp-2);
   font-size:var(--zs-fs-xs);
   font-weight:600;
   color:var(--zs-text);
@@ -1083,7 +1129,7 @@ footer small {
   margin-top:6px;
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-3);
-  line-height:1.6
+  line-height:var(--zs-lh-sm)
 }
 .section-caption {
   font-size:var(--zs-fs-xs);
@@ -1100,8 +1146,8 @@ footer small {
 .plan-tools {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:7px;
-  margin:12px 0
+  gap:var(--zs-sp-2);
+  margin:var(--zs-sp-3) 0
 }
 .plan-tools .button {
   padding:10px;
@@ -1111,7 +1157,7 @@ footer small {
 .plan-item {
   border:1px solid var(--zs-line);
   padding:10px;
-  margin-top:7px;
+  margin-top:var(--zs-sp-2);
   border-radius:var(--zs-radius);
   background:color-mix(in srgb,var(--zs-text) 1%,transparent)
 }
@@ -1128,11 +1174,16 @@ footer small {
   min-width:0;
   padding:3px;
   font-size:var(--zs-fs-sm);
-  color:var(--zs-text)
+  color:var(--zs-text);
+  min-height:0
 }
 .plan-item-top button {
   background:none;
   color:var(--zs-text-3)
+}
+.favorite:hover,.stepper button:hover,.region-drawbar button:hover,.plan-item-top button:hover {
+  color:var(--zs-text);
+  background:var(--zs-line)
 }
 .plan-item small {
   display:block;
@@ -1144,7 +1195,7 @@ footer small {
 .coordinate-form {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:7px
+  gap:var(--zs-sp-2)
 }
 .coordinate-form label {
   font-size:var(--zs-fs-xs);
@@ -1168,9 +1219,14 @@ footer small {
   padding:25px 14px
 }
 .empty-state svg,.empty-state span[data-icon] svg {
-  margin:0 auto 12px;
+  margin:0 auto;
   width:28px;
   height:28px
+}
+.empty-state span[data-icon] {
+  display:flex;
+  justify-content:center;
+  margin-bottom:var(--zs-sp-3)
 }
 .text-button.danger {
   color:var(--zz-danger-muted)
@@ -1180,13 +1236,13 @@ dialog {
   background:var(--zs-overlay);
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius-lg);
-  box-shadow:0 30px 150px var(--zz-shadow);
+  box-shadow:var(--zz-shadow-lg);
   padding:0;
   max-height:90vh
 }
 dialog::backdrop {
   background:color-mix(in srgb,var(--zs-bg) 85%,transparent);
-  backdrop-filter:blur(7px)
+  backdrop-filter:blur(var(--zz-blur))
 }
 .library-dialog {
   width:min(1110px,calc(100vw - 40px));
@@ -1204,8 +1260,9 @@ dialog::backdrop {
   margin-bottom:6px
 }
 .dialog-heading h2 {
-  font-size:21px;
-  letter-spacing:-.4px
+  font-size:var(--zs-fs-h2);
+  letter-spacing:-.4px;
+  line-height:var(--zs-lh-h2)
 }
 .library-filters {
   display:flex;
@@ -1217,7 +1274,7 @@ dialog::backdrop {
   align-items:center;
   gap:10px;
   border:1px solid var(--zs-line-2);
-  border-radius:var(--zz-radius-xs);
+  border-radius:var(--zs-radius);
   padding:0 12px;
   color:var(--zs-text-3);
   flex:1;
@@ -1232,8 +1289,13 @@ dialog::backdrop {
   font-size:var(--zs-fs-xs);
   outline:none
 }
+.search-field input:focus {
+  box-shadow:none;
+  outline:none
+}
 .search-field:focus-within {
-  border-color:color-mix(in srgb,var(--zs-accent) 50%,transparent)
+  border-color:var(--zs-accent);
+  box-shadow:0 0 0 3px var(--zs-accent-glow)
 }
 .library-filters select {
   font-size:var(--zs-fs-xs);
@@ -1256,8 +1318,7 @@ dialog::backdrop {
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:14px;
   max-height:56vh;
-  overflow:auto;
-  scrollbar-width:thin
+  overflow:auto
 }
 .map-card {
   position:relative;
@@ -1294,7 +1355,7 @@ dialog::backdrop {
   padding:12px
 }
 .map-card h3 {
-  font-size:12px;
+  font-size:var(--zs-fs-xs);
   font-weight:700
 }
 .map-card p {
@@ -1330,14 +1391,11 @@ dialog::backdrop {
 .info-dialog {
   width:min(630px,calc(100vw - 32px))
 }
-.info-dialog .dialog-heading h2 {
-  font-size:18px
-}
 #info-body {
   padding:23px 27px;
   color:var(--zs-text-2);
-  font-size:12px;
-  line-height:1.8;
+  font-size:var(--zs-fs-sm);
+  line-height:var(--zs-lh-sm);
   overflow:auto;
   max-height:68vh
 }
@@ -1377,7 +1435,7 @@ dialog::backdrop {
   background:var(--zs-line);
   border:1px solid var(--zs-line-2);
   padding:1px 5px;
-  border-radius:0;
+  border-radius:var(--zz-radius-xs);
   color:var(--zs-text)
 }
 .saved-plan {
@@ -1401,14 +1459,14 @@ dialog::backdrop {
 }
 .saved-plan>div:last-child {
   display:flex;
-  gap:7px
+  gap:var(--zs-sp-2)
 }
 .toast {
   position:fixed;
   bottom:24px;
   left:50%;
   transform:translateX(-50%);
-  z-index:2000;
+  z-index:var(--zz-z-toast);
   max-width:90vw;
   background:var(--zs-accent);
   color:var(--zs-on-accent);
@@ -1416,18 +1474,19 @@ dialog::backdrop {
   border-radius:var(--zs-radius);
   font-size:var(--zs-fs-sm);
   font-weight:600;
-  box-shadow:0 8px 40px var(--zz-shadow)
+  box-shadow:var(--zz-shadow-lg)
 }
 .workspace.expanded {
   position:fixed;
   inset:10px;
-  z-index:1100;
+  z-index:var(--zz-z-expanded);
   display:flex;
   flex-direction:column
 }
 .workspace.expanded .workspace-body {
   flex:1;
-  height:auto
+  height:auto;
+  min-height:0
 }
 .workspace.expanded .matchup {
   display:none
@@ -1483,9 +1542,6 @@ dialog::backdrop {
   .page-heading p {
     margin-top:0
   }
-  .zs-nav a {
-    padding:8px 7px
-  }
   .workspace {
     --zz-sidebar-w:336px
   }
@@ -1495,8 +1551,12 @@ dialog::backdrop {
     padding:8px 10px
   }
   .page {
-    padding-left:60px;
-    padding-right:60px
+    padding-left:var(--zs-sp-8);
+    padding-right:var(--zs-sp-8)
+  }
+  footer {
+    padding-left:var(--zs-sp-8);
+    padding-right:var(--zs-sp-8)
   }
   .workspace {
     --zz-sidebar-w:352px
@@ -1881,20 +1941,16 @@ dialog::backdrop {
     text-align:right
   }
 }
-:root {
-  accent-color:var(--zs-accent);
-}
 .tools-modes {
-  display:flex;
-  margin-bottom:22px
-}
-.tools-modes button {
-  flex:1
+  margin-bottom:22px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--zs-sp-2)
 }
 .drawing-grid {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:7px
+  gap:var(--zs-sp-2)
 }
 .drawing-button {
   display:flex;
@@ -1905,8 +1961,10 @@ dialog::backdrop {
   color:var(--zs-text-2);
   border-radius:var(--zz-radius-xs);
   padding:10px;
-  font:500 var(--zs-fs-xs) Montserrat;
-  cursor:pointer
+  font:inherit;
+  cursor:pointer;
+  font-size:var(--zs-fs-xs);
+  font-weight:var(--zs-fw-medium)
 }
 .drawing-button svg {
   width:17px;
@@ -1937,7 +1995,7 @@ dialog::backdrop {
 .range-label {
   display:flex;
   justify-content:space-between;
-  margin:18px 0 7px;
+  margin:var(--zs-sp-4) 0 var(--zs-sp-2);
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-2);
   line-height:var(--zs-lh-xs)
@@ -1959,9 +2017,6 @@ dialog::backdrop {
   min-height:0;
   padding:2px
 }
-.plan-item-top input {
-  min-height:0
-}
 .check-label {
   display:flex;
   align-items:center;
@@ -1982,7 +2037,10 @@ dialog::backdrop {
   border:1px solid var(--zs-line);
   padding:12px 5px;
   border-radius:var(--zs-radius);
-  text-align:center
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between
 }
 .budget-grid small {
   display:block;
@@ -2011,7 +2069,7 @@ dialog::backdrop {
   display:block;
   font-size:var(--zs-fs-xs);
   font-weight:600;
-  line-height:1.6
+  line-height:var(--zs-lh-sm)
 }
 .build-row small {
   display:block;
@@ -2034,10 +2092,6 @@ dialog::backdrop {
   width:23px;
   height:25px;
   cursor:pointer
-}
-.stepper button:disabled {
-  opacity:.2;
-  cursor:default
 }
 .stepper output {
   font-size:var(--zs-fs-xs);
@@ -2106,27 +2160,11 @@ dialog::backdrop {
 .compare-teams>section+section h3 {
   color:var(--zz-team2)
 }
-.observations>div {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:5px;
-  padding:7px 0;
-  font-size:var(--zs-fs-xs);
-  line-height:var(--zs-lh-xs)
-}
-.observations button {
-  background:transparent;
-  border:0;
-  color:var(--zz-danger);
-  cursor:pointer;
-  font-size:var(--zs-fs-lg)
-}
 .prediction {
   position:absolute;
   left:16px;
   bottom:48px;
-  z-index:500;
+  z-index:var(--zz-z-map);
   background:var(--zz-surface-solid);
   border:1px solid var(--zs-line-2);
   border-radius:var(--zz-radius-xs);
@@ -2151,21 +2189,11 @@ dialog::backdrop {
   opacity:.35;
   text-decoration:line-through
 }
-.overlay-panel {
-  max-height:calc(100% - 30px);
-  overflow-y:auto
-}
 .overlay-panel .side-select {
   margin-bottom:12px
 }
 .overlay-panel .range-label {
   margin-top:12px
-}
-.overlay-panel h3 {
-  margin-bottom:14px
-}
-.observe-button {
-  margin-right:5px
 }
 @media(max-width:600px) {
   .compare-teams {
@@ -2190,9 +2218,6 @@ dialog::backdrop {
 }
 .capture-controls .section-caption {
   margin-top:0
-}
-.capture-controls .team-tabs {
-  gap:6px
 }
 .capture-controls .team-tabs .button {
   font-size:var(--zs-fs-xs);
@@ -2274,7 +2299,7 @@ dialog::backdrop {
   align-items:center;
   gap:8px;
   font-size:var(--zs-fs-xs);
-  line-height:1.5;
+  line-height:var(--zs-lh-sm);
   margin:10px 0
 }
 .region-toggle input,.region-row input {
@@ -2282,7 +2307,7 @@ dialog::backdrop {
 }
 .region-list {
   display:grid;
-  gap:7px;
+  gap:var(--zs-sp-2);
   margin:16px 0
 }
 .region-row {
@@ -2304,10 +2329,13 @@ dialog::backdrop {
   border:0;
   background:none;
   color:var(--zs-text);
-  font:600 var(--zs-fs-xs)/1.5 Montserrat,sans-serif;
+  font:inherit;
   text-align:left;
   cursor:pointer;
-  overflow-wrap:anywhere
+  overflow-wrap:anywhere;
+  font-size:var(--zs-fs-xs);
+  font-weight:var(--zs-fw-semibold);
+  line-height:var(--zs-lh-sm)
 }
 .region-row small {
   display:block;
@@ -2323,7 +2351,7 @@ dialog::backdrop {
 }
 .region-drawbar {
   position:absolute;
-  z-index:700;
+  z-index:var(--zz-z-drawbar);
   left:50%;
   top:60px;
   transform:translateX(-50%);
@@ -2336,10 +2364,7 @@ dialog::backdrop {
   border-radius:var(--zs-radius);
   max-width:calc(100% - 110px);
   flex-wrap:wrap;
-  box-shadow:0 4px 18px color-mix(in srgb,var(--zs-bg) 60%,transparent)
-}
-.region-drawbar[hidden] {
-  display:none
+  box-shadow:var(--zz-shadow-sm)
 }
 .region-drawbar span {
   color:var(--zz-danger);
@@ -2352,13 +2377,12 @@ dialog::backdrop {
   color:var(--zz-cb-fg);
   border-radius:var(--zz-radius-xs);
   padding:7px;
-  font:600 var(--zs-fs-xs)/var(--zs-lh-xs) Montserrat,sans-serif;
+  font:inherit;
   cursor:pointer;
-  white-space:nowrap
-}
-.region-drawbar button:disabled {
-  opacity:.4;
-  cursor:default
+  white-space:nowrap;
+  font-size:var(--zs-fs-xs);
+  font-weight:var(--zs-fw-semibold);
+  line-height:var(--zs-lh-xs)
 }
 .region-vertex {
   display:block;
@@ -2368,7 +2392,7 @@ dialog::backdrop {
   background:var(--zz-red-zone);
   transform:translate(-50%,-50%);
   border-radius:0;
-  box-shadow:0 2px 5px color-mix(in srgb,var(--zs-bg) 53%,transparent)
+  box-shadow:var(--zz-shadow-sm)
 }
 .region-midpoint {
   display:grid;
@@ -2377,16 +2401,15 @@ dialog::backdrop {
   height:13px;
   border:1px solid var(--zz-danger);
   background:color-mix(in srgb,var(--zz-danger) 35%,var(--zs-bg));
-  color:white;
+  color:var(--zs-text);
   transform:translate(-50%,-50%);
   border-radius:50%;
-  font:var(--zs-fs-xs)/1 Arial
+  font:inherit;
+  font-size:var(--zs-fs-xs);
+  line-height:var(--zs-lh-xs)
 }
 .region-editor .plan-tools {
   flex-wrap:wrap
-}
-.workspace.expanded .workspace-body {
-  min-height:0
 }
 .workspace.expanded .workspace-bar {
   flex-shrink:0
@@ -2418,7 +2441,7 @@ dialog::backdrop {
   color:var(--zs-accent);
   cursor:pointer;
   font-size:var(--zs-fs-xs);
-  line-height:1.6
+  line-height:var(--zs-lh-sm)
 }
 .region-library input {
   width:100%
@@ -2426,7 +2449,7 @@ dialog::backdrop {
 .region-library .button {
   width:100%;
   white-space:normal;
-  margin:7px 0
+  margin:var(--zs-sp-2) 0
 }
 .region-copy-preview {
   border:1px solid color-mix(in srgb,var(--zs-accent) 33%,transparent);
@@ -2452,7 +2475,7 @@ dialog::backdrop {
 }
 .region-copy-preview>.button {
   width:100%;
-  margin-bottom:7px;
+  margin-bottom:var(--zs-sp-2);
   white-space:normal
 }
 .workspace .zz-tactical-map .zz-objective-disc {
@@ -2470,7 +2493,7 @@ dialog::backdrop {
   height:calc(var(--marker-size,29px) * 1.1)
 }
 .workspace .zz-tactical-map .zz-objective-name {
-  font-size:var(--label-size,10px)
+  font-size:var(--label-size,12px)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-selected {
   background:var(--zz-cb-sky-bg);
@@ -2485,21 +2508,6 @@ dialog::backdrop {
   background:var(--zz-cb-orange-bg);
   border-color:var(--zz-cb-orange)
 }
-.workspace.colorblind .capture-path button {
-  color:var(--zz-cb-sky-text);
-  border-color:color-mix(in srgb,var(--zz-cb-sky) 50%,transparent);
-  background:color-mix(in srgb,var(--zz-cb-sky) 9%,transparent)
-}
-.workspace.colorblind .capture-next button,.workspace.colorblind .capture-next b {
-  color:var(--zz-cb-orange-text);
-  border-color:color-mix(in srgb,var(--zz-cb-orange) 50%,transparent)
-}
-.workspace.colorblind .team-emblem.red {
-  color:var(--zz-cb-orange)
-}
-.workspace.colorblind .prediction .lane-chip {
-  color:var(--zz-cb-orange-text)
-}
 .workspace.colorblind .map-legend {
   color:var(--zz-cb-fg)
 }
@@ -2507,12 +2515,12 @@ dialog::backdrop {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin:16px 0
+  margin:10px 0
 }
 .terrain-offsets label {
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-2);
-  line-height:1.6
+  line-height:var(--zs-lh-sm)
 }
 .terrain-offsets input {
   width:100%;
@@ -2523,9 +2531,6 @@ dialog::backdrop {
   background:var(--zz-map-surface);
   border:1px solid color-mix(in srgb,var(--zs-accent) 15%,transparent);
   border-radius:var(--zs-radius)
-}
-.terrain-numbers {
-  margin-top:15px
 }
 .terrain-dialog {
   width:min(1150px,96vw);
@@ -2540,23 +2545,28 @@ dialog::backdrop {
 }
 .terrain-dialog::backdrop {
   background:color-mix(in srgb,var(--zs-bg) 85%,transparent);
-  backdrop-filter:blur(5px)
+  backdrop-filter:blur(var(--zz-blur))
 }
 .terrain-dialog-head {
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:16px
+  margin-bottom:16px;
+  position:sticky;
+  top:-20px;
+  z-index:2;
+  background:var(--zs-overlay);
+  padding:8px 0
 }
 .terrain-dialog h2 {
-  font-size:20px;
+  font-size:var(--zs-fs-h2);
   margin:6px 0
 }
 .terrain-dialog canvas {
   display:block;
   width:100%;
-  height:min(62vh,640px);
+  height:clamp(220px,calc(94dvh - 260px),560px);
   touch-action:none;
   border-radius:var(--zs-radius)
 }
@@ -2567,7 +2577,7 @@ dialog::backdrop {
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:18px;
+  gap:10px;
   margin-top:15px;
   font-size:var(--zs-fs-xs)
 }
@@ -2575,9 +2585,6 @@ dialog::backdrop {
   display:flex;
   align-items:center;
   gap:10px
-}
-.tools-modes {
-  flex-wrap:wrap
 }
 @media(max-width:600px) {
   .terrain-dialog {
@@ -2635,7 +2642,7 @@ dialog::backdrop {
 }
 .terrain-status {
   font-size:var(--zs-fs-xs);
-  line-height:1.65;
+  line-height:var(--zs-lh-sm);
   margin:12px 0 18px;
   color:var(--zs-text-2)
 }
@@ -2649,7 +2656,7 @@ dialog::backdrop {
   color:var(--zs-text-2);
   font-size:var(--zs-fs-xs);
   padding:5px 0;
-  line-height:1.5
+  line-height:var(--zs-lh-sm)
 }
 .terrain-detail[open] summary,.hud-details[open] summary {
   margin-bottom:12px;
@@ -2661,20 +2668,13 @@ dialog::backdrop {
 }
 .terrain-camera-buttons {
   display:flex;
-  gap:7px;
+  gap:var(--zs-sp-2);
   align-items:center
 }
 .terrain-camera-buttons [data-terrain-zoom] {
   min-width:44px;
   min-height:44px;
-  font-size:18px
-}
-.terrain-offsets {
-  margin:10px 0
-}
-.overlay-panel {
-  max-height:min(70vh,480px);
-  overflow-y:auto
+  font-size:var(--zs-fs-lg)
 }
 .hud-details .side-select {
   margin-bottom:10px
@@ -2722,22 +2722,9 @@ dialog::backdrop {
   margin-bottom:8px
 }
 .terrain-detail .check-label {
-  line-height:1.5
+  line-height:var(--zs-lh-sm)
 }
 /* Keep the main 3D controls and header in view; extra settings can scroll. */
-.terrain-dialog canvas {
-  height:clamp(220px,calc(94dvh - 260px),560px)
-}
-.terrain-dialog-head {
-  position:sticky;
-  top:-20px;
-  z-index:2;
-  background:var(--zs-overlay);
-  padding:8px 0
-}
-.terrain-controls {
-  gap:10px
-}
 .terrain-controls>span:not(.terrain-legend) {
   color:var(--zs-text-2)
 }
@@ -2763,7 +2750,7 @@ dialog::backdrop {
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc {
   background:var(--zz-map-surface);
-  color:white;
+  color:var(--zz-cb-fg);
   border-color:var(--zz-cb-edge)
 }
 .workspace .zz-tactical-map.colorblind .zz-objective-disc.capture-selected {
@@ -2799,7 +2786,7 @@ dialog::backdrop {
 .zz-cb-state {
   font-size:var(--zs-fs-xs);
   font-weight:800;
-  color:white;
+  color:var(--zz-cb-fg);
   background:var(--zz-surface-solid);
   padding:2px 5px;
   border-radius:0;
@@ -2848,7 +2835,7 @@ dialog::backdrop {
   display:block;
   width:max-content;
   background:var(--zz-surface-solid);
-  color:white;
+  color:var(--zz-cb-fg);
   border:1px solid var(--zz-cb-edge);
   font-size:var(--zs-fs-xs);
   padding:3px 5px;
@@ -2862,7 +2849,7 @@ dialog::backdrop {
   display:block;
   padding:10px 0;
   font-size:var(--zs-fs-xs);
-  line-height:1.6;
+  line-height:var(--zs-lh-sm);
   color:var(--cb-flight,var(--zz-warn))
 }
 .flight-pad {
@@ -2889,11 +2876,6 @@ dialog::backdrop {
   width:100%;
   font-size:var(--zs-fs-xs)
 }
-.overlay-panel {
-  max-width:min(310px,calc(100vw - 65px));
-  max-height:calc(100% - 35px);
-  overflow:auto
-}
 .workspace.colorblind .legend-dot.blue {
   background:var(--cb-team1);
   border-radius:0
@@ -2905,13 +2887,13 @@ dialog::backdrop {
 }
 .workspace.colorblind .legend-dot.white {
   background:var(--zz-map-surface);
-  border:1px dashed white
+  border:1px dashed var(--zz-cb-fg)
 }
 .scene-summary {
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-2);
   margin:7px 0;
-  line-height:1.5
+  line-height:var(--zs-lh-sm)
 }
 .flight-location {
   display:flex;
@@ -2942,16 +2924,13 @@ dialog::backdrop {
 }
 .pinned-timers {
   position:absolute;
-  z-index:450;
+  z-index:var(--zz-z-timers);
   left:14px;
   bottom:55px;
   max-width:min(390px,calc(100% - 80px));
   display:grid;
   gap:5px;
   pointer-events:none
-}
-.pinned-timers[hidden] {
-  display:none
 }
 .pinned-timer {
   display:flex;
@@ -2982,7 +2961,7 @@ dialog::backdrop {
 #sight-status,[data-texture-status] {
   display:block;
   font-size:var(--zs-fs-xs);
-  line-height:1.5;
+  line-height:var(--zs-lh-sm);
   margin-top:8px;
   color:var(--zs-text)
 }
@@ -3009,6 +2988,17 @@ body.colorblind {
   --zs-line:#ffffff30;
   --zs-line-2:#ffffff65
 }
+/* Üst çubuk ve alt bilgi site kabuğudur: erişilebilirlik paleti .page ve diyaloglara uygulanır, kabuk site değerlerine döner. */
+body.colorblind :is(.zs-topbar,.skip-link,footer) {
+  --zs-accent:#b5e8fa;
+  --zs-accent-soft:rgba(181,232,250,.06);
+  --zs-accent-glow:rgba(181,232,250,.1);
+  --zs-text:#f4f3ef;
+  --zs-text-2:#aaa9a7;
+  --zs-text-3:#8a8987;
+  --zs-line:#ffffff12;
+  --zs-line-2:#ffffff1c
+}
 body.colorblind :is(input,select,textarea) {
   border-color:var(--zs-text-3)
 }
@@ -3016,10 +3006,11 @@ body.colorblind :is(input,select,textarea):focus {
   outline:2px solid var(--cb-team1);
   outline-offset:2px
 }
-body.colorblind :is(.button.primary,.mode-pill.active,.drawing-button.active,.tool-button.active) {
+body.colorblind :is(.button.primary,.mode-pill.active,.drawing-button.active,.team-tabs .button.primary) {
   background:var(--cb-team1);
   color:var(--zz-map-surface);
-  border:2px solid var(--zz-cb-fg)
+  border:1px solid var(--zz-cb-fg);
+  box-shadow:inset 0 0 0 1px var(--zz-cb-fg)
 }
 body.colorblind :is(.danger,.over-budget,.terrain-status.over-budget) {
   color:var(--cb-team2);
@@ -3077,7 +3068,7 @@ body.colorblind dialog {
 body.colorblind :is(.map-card,.layer-card,.vehicle,.timer-row,.build-row) {
   border-color:var(--zs-line-2)
 }
-body.colorblind .map-card.selected {
+body.colorblind .map-card.chosen {
   outline:2px solid var(--cb-team1)
 }
 body.colorblind input[type=range] {
@@ -3101,10 +3092,10 @@ body.colorblind .layer-card.selected {
   border-color:var(--cb-team1);
   background:color-mix(in srgb,var(--zs-text) 10%,var(--zs-bg))
 }
-body.colorblind :is(.selected-map,.map-thumb) {
+body.colorblind .selected-map {
   filter:var(--map-image-filter)
 }
-body.colorblind :is(.vehicle-meta,.team-unit-name,.team-strip small,.terrain-controls>span:not(.terrain-legend)) {
+body.colorblind :is(.vehicle-meta,.team-strip small,.terrain-controls>span:not(.terrain-legend)) {
   color:var(--zs-text-2)
 }
 .zz-category-marker .zz-draw-code {
@@ -3125,7 +3116,7 @@ body.colorblind :is(.map-change,.side-note.accent-note,.budget-grid>div,.terrain
 body.colorblind :is(.range-label output,.stepper button,.region-help summary,.timer-row output) {
   color:var(--cb-team1)
 }
-body.colorblind :is(.timer-row output.counting,.terrain-playback output,.observations button) {
+body.colorblind :is(.timer-row output.counting,.terrain-playback output) {
   color:var(--cb-team2)
 }
 body.colorblind .map-heading .heading-mode {
@@ -3202,7 +3193,7 @@ body.colorblind .terrain-dialog canvas:focus-visible {
   border:2px solid var(--symbol-color);
   border-radius:var(--zz-radius-xs);
   background:var(--zz-surface-solid);
-  box-shadow:0 2px 7px color-mix(in srgb,var(--zs-bg) 60%,transparent);
+  box-shadow:var(--zz-shadow-sm);
   transform:translate(-50%,-50%)
 }
 .zz-squad-symbol img {
@@ -3243,25 +3234,12 @@ body.colorblind .vehicle-visual img {
   width:20px;
   height:14px
 }
-.flag-select .zz-flag {
-  width:30px;
-  height:20px
-}
 .team-head {
   display:flex;
   align-items:center;
   gap:10px;
   margin-top:14px;
   font-size:var(--zs-fs-sm)
-}
-.flag-select {
-  display:flex;
-  align-items:center;
-  gap:8px
-}
-.flag-select .side-select {
-  flex:1;
-  width:auto
 }
 .team-flag {
   display:flex;
@@ -3278,9 +3256,6 @@ body.colorblind .vehicle-visual img {
   font-weight:600;
   letter-spacing:0;
   color:var(--zs-text-2)
-}
-.live-badge[hidden] {
-  display:none
 }
 .live-badge-dot {
   width:8px;

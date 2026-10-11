@@ -12,7 +12,7 @@ export function createTerrainTools({map,getState,setTool,escape:esc,toast,readSt
  async function load(id,layer){
   if(!cache.has(id)){const promise=fetch(`data/terrain/${encodeURIComponent(id)}.json`).then(r=>{if(!r.ok)throw Error('Bu harita için yükseklik verisi yok.');return r.json();}).then(validateTerrain);cache.set(id,promise);promise.catch(()=>cache.delete(id));}
   const data=await cache.get(id);
-  if(Math.abs(data.widthMeters-layer.widthMeters)>Math.max(3,data.widthMeters*.005)||Math.abs(data.heightMeters-layer.heightMeters)>Math.max(3,data.heightMeters*.005))throw Error('Bu layerın harita sınırları yükseklik verisiyle eşleşmiyor. Arazi hesabı kapalı.');
+  if(Math.abs(data.widthMeters-layer.widthMeters)>Math.max(3,data.widthMeters*.005)||Math.abs(data.heightMeters-layer.heightMeters)>Math.max(3,data.heightMeters*.005))throw Error('Bu katmanın harita sınırları yükseklik verisiyle eşleşmiyor. Arazi hesabı kapalı.');
   return data;
  }
  function lines(){return map.exportPlan().filter(a=>a.tool==='mortar'&&a.points.length===2);}

@@ -3,23 +3,16 @@
   --armor-block:var(--zz-warn);
   --armor-pass:var(--zz-team1)
 }
-.armor-nav {
-  display:flex;
-  gap:24px;
-  margin-left:auto
-}
-.armor-nav a {
-  font-size:var(--zs-fs-sm);
-  color:var(--zs-text-2);
-  text-decoration:none
-}
-.armor-nav [aria-current] {
-  color:var(--armor-accent)
-}
-.armor-version {
+.armor-tab-badge {
   font-size:var(--zs-fs-xs);
-  color:var(--zs-text-3);
-  margin-left:24px
+  font-weight:var(--zs-fw-semibold);
+  color:var(--zs-accent);
+  border:1px solid var(--zs-accent);
+  border-radius:var(--zs-radius);
+  padding:8px 12px
+}
+.armor-page .page-heading .eyebrow {
+  flex-basis:100%
 }
 .armor-layout {
   display:grid;
@@ -51,11 +44,11 @@
   width:100%;
   background:var(--zs-surface-2);
   color:var(--zs-text);
-  border:1px solid var(--zs-line-3);
+  border:1px solid var(--zs-line-2);
   padding:10px;
   border-radius:var(--zs-radius);
   font:inherit;
-  font-size:var(--zs-fs-xs);
+  font-size:var(--zs-fs-sm);
   min-height:44px
 }
 .armor-panel input[type=range] {
@@ -63,7 +56,12 @@
   accent-color:var(--armor-accent)
 }
 .armor-panel select {
-  white-space:normal
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden
+}
+.armor-panel select:focus,.armor-panel input:focus {
+  border-color:var(--zs-accent)
 }
 .armor-panel .armor-check {
   display:flex;
@@ -112,6 +110,9 @@
   margin-top:16px
 }
 .ammo-stats span {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
   font-size:var(--zs-fs-xs);
   color:var(--zs-text-2)
 }
@@ -160,9 +161,6 @@
   color:var(--zs-text);
   white-space:pre-line
 }
-.armor-loading[hidden] {
-  display:none
-}
 .armor-scene-label {
   position:absolute;
   left:20px;
@@ -176,9 +174,16 @@
 .armor-scene-label strong {
   font-size:var(--zs-fs-h2)
 }
-.armor-scene-label span {
+.armor-scene-label span,.armor-legend {
   font-size:var(--zs-fs-xs);
-  color:var(--zs-text-2)
+  color:var(--zs-text);
+  background:var(--zs-surface-2);
+  padding:4px 8px;
+  border-radius:var(--zz-radius-xs);
+  text-shadow:none
+}
+.armor-scene-label span {
+  align-self:flex-start
 }
 .armor-crosshair {
   position:absolute;
@@ -253,6 +258,8 @@
 }
 .armor-table-wrap {
   overflow:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--zs-line-3) transparent;
   margin-top:12px;
   border:1px solid var(--zs-line-2);
   border-radius:var(--zs-radius)
@@ -276,7 +283,10 @@
 }
 .armor-table th {
   font-size:var(--zs-fs-xs);
-  color:var(--zs-text-2)
+  color:var(--zs-text-3);
+  text-transform:uppercase;
+  font-weight:var(--zs-fw-semibold);
+  letter-spacing:.3px
 }
 .armor-table td small {
   display:block;
@@ -301,14 +311,6 @@
   line-height:var(--zs-lh-xs);
   margin-top:22px
 }
-.armor-page button:disabled,.armor-page select:disabled {
-  opacity:.45;
-  cursor:not-allowed
-}
-.armor-page :focus-visible {
-  outline:2px solid var(--armor-accent);
-  outline-offset:3px
-}
 .armor-page .sr-only {
   position:absolute;
   width:1px;
@@ -317,9 +319,6 @@
   overflow:hidden;
   clip:rect(0,0,0,0);
   white-space:nowrap
-}
-.armor-page .page {
-  max-width:1640px
 }
 .armor-page .page-heading h1 {
   font-size:var(--zs-fs-display);line-height:var(--zs-lh-display)
@@ -417,16 +416,6 @@
     scroll-behavior:auto!important
   }
 }
-.armor-page .zs-topbar {
-  position:relative;
-  top:auto;
-  left:auto;
-  right:auto;
-  margin:12px
-}
-.armor-page .page {
-  padding-top:24px
-}
 .armor-display-bar {
   display:flex;
   align-items:center;
@@ -445,9 +434,6 @@
   border-radius:var(--zs-radius);
   padding:12px;
   margin-bottom:10px
-}
-.armor-components[hidden] {
-  display:none
 }
 .armor-components #component-list {
   display:flex;
@@ -485,4 +471,8 @@
 }
 #exterior-note {
   margin:0 0 10px
+}
+.armor-view-buttons button:hover,.armor-components button:hover {
+  color:var(--zs-text);
+  background:var(--zs-line)
 }
