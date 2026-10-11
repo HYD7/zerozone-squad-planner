@@ -133,6 +133,20 @@ async function boot({search='',storageInit={},live}){
   assert.equal(t.api.dbg().solved,null);assert.equal(t.badge().hidden,true);
   console.log('PASS a: 404 after follow restores ?map=&layer= and clears liveSolved.');
 }
+// takip kapaninca URL aninda guncellenir + Takibi kapat
+{
+  const t=await boot({live:INVASION});
+  assert.match(t.badge().innerHTML,/data-action="live-unfollow"[^>]*>Takibi kapat/);
+  await t.click({layer:'Gorodok_RAAS_v1'});
+  const u=new URL(t.urls.at(-1));assert.equal(u.searchParams.get('map'),'Gorodok');assert.equal(u.searchParams.get('layer'),'Gorodok_RAAS_v1');
+  const t2=await boot({live:INVASION});
+  assert.equal(new URL(t2.urls.at(-1)).searchParams.has('layer'),false);
+  await t2.api.actions['live-unfollow']();await settle();
+  assert.equal(t2.storage.get('zerozone-maps-v1:live-follow'),'0');
+  assert.match(t2.badge().innerHTML,/Canlı: /);assert.match(t2.badge().innerHTML,/Canlıya dön/);assert.doesNotMatch(t2.badge().innerHTML,/Takibi kapat/);
+  assert.equal(new URL(t2.urls.at(-1)).searchParams.get('layer'),'Gorodok_Invasion_v3');
+  console.log('PASS b: unfollow updates URL and badge.');
+}
 // (a2) online:false
 {
   let body=INVASION();const t=await boot({live:()=>body});

@@ -4,12 +4,13 @@
   --armor-pass:var(--zz-team1)
 }
 .armor-tab-badge {
-  font-size:var(--zs-fs-xs);
+  font-size:12px;
   font-weight:var(--zs-fw-semibold);
+  text-transform:uppercase;
   color:var(--zs-accent);
-  border:1px solid var(--zs-accent);
-  border-radius:var(--zs-radius);
-  padding:8px 12px
+  background:var(--zs-accent-soft);
+  border-radius:var(--zs-radius-pill);
+  padding:6px 12px
 }
 .armor-page .page-heading .eyebrow {
   flex-basis:100%
