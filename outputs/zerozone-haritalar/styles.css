@@ -1463,10 +1463,26 @@ dialog::backdrop {
   margin-top:3px;
   color:var(--zs-accent)
 }
-.workspace-body {
-  height:560px
-}
 @media(min-width:1121px) {
+  .workspace-body {
+    height:clamp(640px,calc(100vh - 200px),1000px)
+  }
+  .breadcrumb {
+    margin-bottom:var(--zs-sp-3)
+  }
+  .page-heading {
+    flex-wrap:wrap;
+    margin-bottom:var(--zs-sp-4)
+  }
+  .page-heading>div:first-child {
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:var(--zs-sp-4)
+  }
+  .page-heading p {
+    margin-top:0
+  }
   .zs-nav a {
     padding:8px 7px
   }
