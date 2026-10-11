@@ -3223,3 +3223,82 @@ body.colorblind .vehicle-visual img {
 .timer-row .vehicle-visual img {
   height:84px
 }
+
+.zz-flag {
+  display:block;
+  flex:none;
+  width:42px;
+  height:28px;
+  object-fit:cover;
+  border:1px solid var(--zs-line-2);
+  border-radius:var(--zz-radius-xs);
+  background:var(--zs-surface-2)
+}
+.zz-flag.is-missing,.zz-flag-missing {
+  object-position:-9999px 0;
+  color:transparent;
+  overflow:hidden
+}
+.layer-sub .zz-flag {
+  width:20px;
+  height:14px
+}
+.flag-select .zz-flag {
+  width:30px;
+  height:20px
+}
+.team-head {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:14px;
+  font-size:var(--zs-fs-sm)
+}
+.flag-select {
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+.flag-select .side-select {
+  flex:1;
+  width:auto
+}
+.team-flag {
+  display:flex;
+  flex:none
+}
+.team-strip b .faction-code {
+  margin-left:6px;
+  font-weight:600
+}
+.live-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+  letter-spacing:0;
+  color:var(--zs-text-2)
+}
+.live-badge[hidden] {
+  display:none
+}
+.live-badge-dot {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  border:2px solid var(--zs-text-3);
+  box-sizing:border-box
+}
+.live-badge.is-live {
+  color:var(--zz-ok)
+}
+.live-badge.is-live .live-badge-dot {
+  background:var(--zz-ok);
+  border-color:var(--zz-ok)
+}
+.live-badge .button.compact {
+  padding-block:3px
+}
+.toast .button {
+  margin-left:8px
+}
